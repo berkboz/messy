@@ -1,0 +1,10 @@
+Temiz — Turkish for clean. A free, open-source Mac maintenance app by Berk Boz (brk.bz).
+One button Check up: looks for junk, threats, maintenance that is due and duplicates, all at once. Nothing changes until you review the results and press Run.
+Clean: caches, logs, developer leftovers and old installers; everything goes to the Trash first.
+Protect: flags cracked or tampered apps, suspicious background services and open ports.
+Speed: what starts with your Mac, and maintenance tasks.
+Apps: removes apps with their leftovers; checks for updates when you ask.
+Clutter: large, old and duplicate files. Space: a map of your disk.
+Monitor: CPU, memory, battery, disk and network, also from the menu bar.
+No helper running as root. No account, no telemetry. No network unless you click.
+Free & open source. brk.bz/temiz

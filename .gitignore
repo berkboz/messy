@@ -7,3 +7,6 @@ design/shots-0.2/
 design/brand/*.log
 design/icon-1024.png
 *.log
+videos/*/node_modules/
+videos/*/renders/
+videos/*/.hyperframes/artifacts/

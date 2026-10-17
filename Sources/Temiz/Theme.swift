@@ -196,7 +196,8 @@ struct Mascot: View {
 
     var body: some View {
         if let image, let cg = image.cgImage(forProposedRect: nil, context: nil, hints: nil) {
-            MascotLayer(image: cg, motion: motion).frame(width: size, height: size)
+            MascotLayer(image: cg, motion: motion, flipbook: motion == .none ? nil : Flipbook.load(for: pose))
+                .frame(width: size, height: size)
         } else {
             GradientIcon(symbol: "sparkles", size: size * 0.4).frame(width: size, height: size)
         }
@@ -208,11 +209,23 @@ struct Mascot: View {
 private struct MascotLayer: NSViewRepresentable {
     let image: CGImage
     let motion: Mascot.Motion
+    let flipbook: Flipbook?
+
+    /// Frames that already sweep or hop need no extra rocking or bouncing from the layer.
+    private var layerMotion: Mascot.Motion {
+        guard flipbook != nil else { return motion }
+        switch motion {
+        case .sweep: return .bob
+        case .bounce: return .none
+        default: return motion
+        }
+    }
 
     func makeNSView(context: Context) -> SpriteView {
         let view = SpriteView()
         view.sprite.contents = image
-        Self.animate(view.sprite, motion)
+        Self.animate(view.sprite, layerMotion)
+        flipbook?.play(on: view.sprite)
         context.coordinator.motion = motion
         return view
     }
@@ -221,7 +234,8 @@ private struct MascotLayer: NSViewRepresentable {
         view.sprite.contents = image
         if context.coordinator.motion != motion {
             context.coordinator.motion = motion
-            Self.animate(view.sprite, motion)
+            Self.animate(view.sprite, layerMotion)
+            flipbook?.play(on: view.sprite)
         }
     }
 
@@ -285,6 +299,62 @@ private struct MascotLayer: NSViewRepresentable {
         case .none:
             break
         }
+    }
+}
+
+/// Frames cut from a one-row sprite sheet (sprite-<name>.png), played as a keyframe animation of
+/// the layer's contents, which also runs in the render server.
+struct Flipbook {
+    let frames: [CGImage]
+    let keyTimes: [NSNumber]
+    let values: [CGImage]
+    let duration: Double
+
+    private static var cache: [String: [CGImage]] = [:]
+
+    static func load(for pose: Mascot.Pose) -> Flipbook? {
+        switch pose {
+        case .idle:
+            // Mostly open eyes, with a quick blink every four seconds.
+            guard let f = frames("blink", count: 4) else { return nil }
+            return Flipbook(frames: f, keyTimes: [0, 0.90, 0.93, 0.96, 1].map { NSNumber(value: $0) },
+                            values: [f[0], f[1], f[2], f[1], f[0]], duration: 4)
+        case .sweep:
+            guard let f = frames("sweep", count: 6) else { return nil }
+            return evenly(f + f.dropFirst().dropLast().reversed(), duration: 0.9)
+        case .happy:
+            guard let f = frames("hop", count: 5) else { return nil }
+            return evenly(f, duration: 0.7)
+        case .worried:
+            return nil
+        }
+    }
+
+    private static func evenly(_ f: [CGImage], duration: Double) -> Flipbook {
+        let times = (0...f.count).map { NSNumber(value: Double($0) / Double(f.count)) }
+        return Flipbook(frames: f, keyTimes: times, values: f + [f[0]], duration: duration)
+    }
+
+    private static func frames(_ name: String, count: Int) -> [CGImage]? {
+        if let hit = cache[name] { return hit }
+        guard let url = Bundle.main.url(forResource: "sprite-\(name)", withExtension: "png"),
+              let sheet = NSImage(contentsOf: url)?.cgImage(forProposedRect: nil, context: nil, hints: nil)
+        else { return nil }
+        let w = sheet.width / count
+        let f = (0..<count).compactMap { sheet.cropping(to: CGRect(x: $0 * w, y: 0, width: w, height: sheet.height)) }
+        guard f.count == count else { return nil }
+        cache[name] = f
+        return f
+    }
+
+    func play(on layer: CALayer) {
+        let a = CAKeyframeAnimation(keyPath: "contents")
+        a.values = values
+        a.keyTimes = keyTimes
+        a.calculationMode = .discrete
+        a.duration = duration
+        a.repeatCount = .infinity
+        layer.add(a, forKey: "flipbook")
     }
 }
 
