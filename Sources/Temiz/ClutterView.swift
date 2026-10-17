@@ -118,6 +118,7 @@ final class ClutterModel: ObservableObject {
         DispatchQueue.global(qos: .userInitiated).async {
             let failed = FS.trash(urls)
             DispatchQueue.main.async {
+                if failed.count < urls.count { Sound.trash.play() }
                 let moved = Set(urls).subtracting(failed.map(\.0))
                 self.removeMoved(moved)
                 self.message = "\(plural(moved.count, "file")) (\(Fmt.bytes(size))) moved to the Trash."

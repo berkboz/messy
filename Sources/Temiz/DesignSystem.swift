@@ -60,7 +60,7 @@ struct BrandBackground: View {
 /// Default for every Toggle: a rounded check with a springy tick.
 struct CheckStyle: ToggleStyle {
     func makeBody(configuration: Configuration) -> some View {
-        Button { configuration.isOn.toggle() } label: {
+        Button { configuration.isOn.toggle(); Sound.tick.play() } label: {
             HStack(spacing: 10) {
                 ZStack {
                     RoundedRectangle(cornerRadius: 6)
@@ -86,7 +86,7 @@ struct CheckStyle: ToggleStyle {
 /// For on/off settings: a capsule switch with a bouncing knob.
 struct PillSwitchStyle: ToggleStyle {
     func makeBody(configuration: Configuration) -> some View {
-        Button { configuration.isOn.toggle() } label: {
+        Button { configuration.isOn.toggle(); Sound.tick.play() } label: {
             HStack {
                 configuration.label
                 Spacer(minLength: 8)

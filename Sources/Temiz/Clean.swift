@@ -39,6 +39,7 @@ final class CleanModel: ObservableObject {
         DispatchQueue.global(qos: .userInitiated).async {
             let ok = FS.emptyTrash()
             DispatchQueue.main.async {
+                if ok { Sound.trash.play() }
                 self.emptying = false
                 self.message = ok ? "The Trash is empty." : "Finder could not empty the Trash. Allow Temiz to control Finder in System Settings → Privacy & Security → Automation."
                 self.refreshTrash()
@@ -95,6 +96,7 @@ final class CleanModel: ObservableObject {
         DispatchQueue.global(qos: .userInitiated).async {
             let failed = FS.trash(urls)
             DispatchQueue.main.async {
+                if failed.count < urls.count { Sound.trash.play() }
                 self.scanning = false
                 var m = "\(plural(urls.count - failed.count, "item")) (\(Fmt.bytes(size))) moved to the Trash. Empty the Trash to free the space."
                 if !failed.isEmpty { m += " \(plural(failed.count, "item")) could not be moved (in use or protected)." }

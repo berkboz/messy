@@ -191,6 +191,7 @@ final class UninstallModel: ObservableObject {
         // Give terminated apps a moment to exit before moving them.
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
             FS.recycle(targets) { trashed in
+                if !trashed.isEmpty { Sound.trash.play() }
                 if trashed.contains(app.url) {
                     self.apps.removeAll { $0.url == app.url }
                 }

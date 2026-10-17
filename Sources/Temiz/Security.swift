@@ -215,6 +215,7 @@ final class SecurityModel: ObservableObject {
         if let f = FS.trash([item.file]).first {
             message = "Could not move: \(f.1)"
         } else {
+            Sound.trash.play()
             message = "\(item.label.displaySafe) stopped and moved to the Trash."
             items.removeAll { $0.id == item.id }
             threats.removeAll { $0.item?.id == item.id }

@@ -210,6 +210,7 @@ struct SettingsView: View {
     @AppStorage(Prefs.showMenuBar) private var showMenuBar = true
     @AppStorage(Prefs.onboarded) private var onboarded = false
     @AppStorage(Prefs2.checkupUpdates) private var checkupUpdates = false
+    @AppStorage(Sound.enabledKey) private var soundEffects = true
     @AppStorage(AlertPrefs.enabled) private var alerts = false
     @AppStorage(AlertPrefs.lowDiskGB) private var lowDiskGB = 15
     @AppStorage(AlertPrefs.trashGB) private var trashGB = 5
@@ -233,6 +234,7 @@ struct SettingsView: View {
                 }
                 group("General") {
                     Toggle("Show CPU and RAM in the menu bar", isOn: $showMenuBar).toggleStyle(PillSwitchStyle())
+                    Toggle("Sound effects", isOn: $soundEffects).toggleStyle(PillSwitchStyle())
                     Toggle("Open Temiz at login", isOn: Binding(get: { state.loginItem }, set: { state.toggleLogin($0) }))
                         .toggleStyle(PillSwitchStyle())
                     if let e = state.loginError { Text(e).font(.caption).foregroundStyle(.red) }

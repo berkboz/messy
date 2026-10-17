@@ -6,7 +6,7 @@ OUT=$(mktemp -d)
 trap 'rm -rf "$OUT"' EXIT
 S=Sources/Temiz
 if ! swiftc -O -o "$OUT/tests" \
-  $S/Util.swift $S/Theme.swift $S/DesignSystem.swift $S/Clutter.swift $S/ClutterView.swift $S/Security.swift $S/Threats.swift $S/Uninstall.swift $S/Updates.swift \
+  $S/Util.swift $S/Theme.swift $S/DesignSystem.swift $S/Sounds.swift $S/Clutter.swift $S/ClutterView.swift $S/Security.swift $S/Threats.swift $S/Uninstall.swift $S/Updates.swift \
   Tests/main.swift 2>"$OUT/log"; then
   grep -E 'error' "$OUT/log"; exit 1
 fi

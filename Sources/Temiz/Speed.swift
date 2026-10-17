@@ -138,6 +138,7 @@ final class SpeedModel: ObservableObject {
             }
             DispatchQueue.main.async {
                 for t in done { self.defaults.set(Date(), forKey: "lastRun." + t.rawValue) }
+                if !done.isEmpty { Sound.done.play() }
                 self.running = false
                 self.message = (done.isEmpty ? "" : "Done: \(done.map(\.title).joined(separator: ", ")). ") + notes.joined(separator: " ")
             }

@@ -57,6 +57,7 @@ final class DiskModel: ObservableObject {
             message = "Could not move: \(f.1)"
             return
         }
+        Sound.trash.play()
         message = "\(entry.url.lastPathComponent.displaySafe) (\(Fmt.bytes(entry.size))) moved to the Trash."
         // Sizes of every folder above this one changed.
         for u in stack { cache[u] = nil }

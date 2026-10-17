@@ -18,6 +18,7 @@ lipo -create build/arch/Temiz-arm64 build/arch/Temiz-x86_64 -output "$APP/Conten
 cp Resources/Info.plist "$APP/Contents/Info.plist"
 cp Resources/AppIcon.icns "$APP/Contents/Resources/AppIcon.icns"
 cp Resources/Mascot/*.png "$APP/Contents/Resources/"
+cp Resources/Sounds/*.wav "$APP/Contents/Resources/"
 
 TEAM_ID="${TEAM_ID:-JMAQX8DJ8J}"
 IDENTITY="${SIGN_IDENTITY-$(security find-identity -v -p codesigning 2>/dev/null | awk -F'"' -v t="($TEAM_ID)" '/Developer ID Application/ && index($2, t) {print $2; exit}')}"

@@ -69,6 +69,7 @@ final class CheckupModel: ObservableObject {
         let t = CancelToken()
         token = t
         withAnimation(.easeInOut(duration: 0.3)) { phase = .scanning }
+        Sound.scan.play()
         finished = []
         summary = []
         problems = []
@@ -136,6 +137,7 @@ final class CheckupModel: ObservableObject {
         if !tasks.isEmpty { selected.insert(.maintenance) }
         if duplicatesSize > 0 { selected.insert(.duplicates) }
         withAnimation(.easeInOut(duration: 0.35)) { phase = .results }
+        (threats.contains { $0.trust == .danger } ? Sound.warn : Sound.found).play()
     }
 
     var canRun: Bool { !selected.subtracting([.updates]).isEmpty }
@@ -209,6 +211,7 @@ final class CheckupModel: ObservableObject {
                 self.summary = summary
                 self.problems = problems
                 withAnimation(.easeInOut(duration: 0.35)) { self.phase = .done }
+                Sound.done.play()
                 // Rescan or prune the panes that changed so they do not show moved files.
                 self.store.clutter.removeMoved(Set(movedDupes))
                 self.dupGroups = []
