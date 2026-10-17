@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CFBundleDisplayName</key>
+	<string>Temiz</string>
+	<key>CFBundleExecutable</key>
+	<string>Temiz</string>
+	<key>CFBundleIconFile</key>
+	<string>AppIcon</string>
+	<key>CFBundleIdentifier</key>
+	<string>com.berk.temiz</string>
+	<key>CFBundleName</key>
+	<string>Temiz</string>
+	<key>CFBundlePackageType</key>
+	<string>APPL</string>
+	<key>CFBundleShortVersionString</key>
+	<string>0.2.0</string>
+	<key>CFBundleVersion</key>
+	<string>2</string>
+	<key>LSApplicationCategoryType</key>
+	<string>public.app-category.utilities</string>
+	<key>LSMinimumSystemVersion</key>
+	<string>14.0</string>
+	<key>NSAppleEventsUsageDescription</key>
+	<string>Temiz asks Finder to empty the Trash, only when you click Empty Trash and confirm.</string>
+	<key>NSDesktopFolderUsageDescription</key>
+	<string>Temiz needs access to calculate the size of your Desktop folder for disk analysis.</string>
+	<key>NSDocumentsFolderUsageDescription</key>
+	<string>Temiz needs access to calculate the size of your Documents folder for disk analysis.</string>
+	<key>NSDownloadsFolderUsageDescription</key>
+	<string>Temiz needs access to show old installers in Downloads and their sizes.</string>
+	<key>NSHighResolutionCapable</key>
+	<true/>
+	<key>NSHumanReadableCopyright</key>
+	<string>© 2026 Berk Boz. MIT License.</string>
+</dict>
+</plist>
