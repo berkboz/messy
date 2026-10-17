@@ -195,56 +195,95 @@ struct Mascot: View {
     }
 
     var body: some View {
-        if let image {
-            Image(nsImage: image)
-                .resizable()
-                .interpolation(.high)
-                .aspectRatio(contentMode: .fit)
-                .frame(width: size, height: size)
-                .modifier(MascotMotion(motion: motion))
+        if let image, let cg = image.cgImage(forProposedRect: nil, context: nil, hints: nil) {
+            MascotLayer(image: cg, motion: motion).frame(width: size, height: size)
         } else {
             GradientIcon(symbol: "sparkles", size: size * 0.4).frame(width: size, height: size)
         }
     }
 }
 
-/// Looping motion done with repeating implicit animations, which Core Animation runs in the
-/// render server instead of redrawing the view every frame.
-private struct MascotMotion: ViewModifier {
+/// The mascot as a Core Animation layer. Its looping motion runs in the system's render server,
+/// so an idle screen costs Temiz no CPU (SwiftUI's repeating animations redraw every frame).
+private struct MascotLayer: NSViewRepresentable {
+    let image: CGImage
     let motion: Mascot.Motion
-    @StateObject private var phase = HoverState()
 
-    func body(content: Content) -> some View {
-        content
-            .rotationEffect(.degrees(rotation), anchor: .bottom)
-            .offset(y: offset)
-            .animation(animation, value: phase.on)
-            .onAppear { if motion != .none { phase.on = true } }
+    func makeNSView(context: Context) -> SpriteView {
+        let view = SpriteView()
+        view.sprite.contents = image
+        Self.animate(view.sprite, motion)
+        context.coordinator.motion = motion
+        return view
     }
 
-    private var rotation: Double {
-        switch motion {
-        case .sweep: phase.on ? 14 : -14
-        case .bob: phase.on ? 2 : -2
-        default: 0
+    func updateNSView(_ view: SpriteView, context: Context) {
+        view.sprite.contents = image
+        if context.coordinator.motion != motion {
+            context.coordinator.motion = motion
+            Self.animate(view.sprite, motion)
         }
     }
 
-    private var offset: Double {
-        switch motion {
-        case .bob: phase.on ? -4 : 4
-        case .bounce: phase.on ? -10 : 0
-        case .sweep: phase.on ? -1.5 : 1.5
-        case .none: 0
+    func makeCoordinator() -> Coordinator { Coordinator() }
+
+    final class Coordinator {
+        var motion: Mascot.Motion?
+    }
+
+    /// Keeps the sprite layer sized to the view; SwiftUI sizes the view after creating it.
+    final class SpriteView: NSView {
+        let sprite = CALayer()
+
+        override init(frame: NSRect) {
+            super.init(frame: frame)
+            wantsLayer = true
+            sprite.contentsGravity = .resizeAspect
+            sprite.anchorPoint = CGPoint(x: 0.5, y: 0)      // rock from the bristles, like sweeping
+            layer?.addSublayer(sprite)
+        }
+
+        required init?(coder: NSCoder) { nil }
+
+        override func layout() {
+            super.layout()
+            CATransaction.begin()
+            CATransaction.setDisableActions(true)
+            sprite.bounds = bounds
+            sprite.position = CGPoint(x: bounds.midX, y: 0)
+            sprite.contentsScale = window?.backingScaleFactor ?? 2
+            CATransaction.commit()
+        }
+
+        override func viewDidChangeBackingProperties() {
+            super.viewDidChangeBackingProperties()
+            needsLayout = true
         }
     }
 
-    private var animation: Animation? {
+    private static func animate(_ layer: CALayer, _ motion: Mascot.Motion) {
+        layer.removeAllAnimations()
+        func loop(_ key: String, from: Double, to: Double, duration: Double) {
+            let a = CABasicAnimation(keyPath: key)
+            a.fromValue = from
+            a.toValue = to
+            a.duration = duration
+            a.autoreverses = true
+            a.repeatCount = .infinity
+            a.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
+            layer.add(a, forKey: key)
+        }
+        let degrees = Double.pi / 180
         switch motion {
-        case .bob: .easeInOut(duration: 1.8).repeatForever(autoreverses: true)
-        case .sweep: .easeInOut(duration: 0.45).repeatForever(autoreverses: true)
-        case .bounce: .easeOut(duration: 0.35).repeatForever(autoreverses: true)
-        case .none: nil
+        case .bob:
+            loop("transform.translation.y", from: -4, to: 4, duration: 1.8)
+            loop("transform.rotation.z", from: -2 * degrees, to: 2 * degrees, duration: 2.3)
+        case .sweep:
+            loop("transform.rotation.z", from: -14 * degrees, to: 14 * degrees, duration: 0.45)
+        case .bounce:
+            loop("transform.translation.y", from: 0, to: 10, duration: 0.35)
+        case .none:
+            break
         }
     }
 }
