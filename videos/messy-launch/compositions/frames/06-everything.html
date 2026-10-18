@@ -1,0 +1,179 @@
+<template>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+  <style>
+    #root { position: absolute; inset: 0; width: 1920px; height: 1080px; overflow: hidden; font-family: "Nunito", sans-serif; }
+    #all-bg { position: absolute; inset: 0; background: radial-gradient(ellipse 70% 60% at 50% 55%, #0f3536 0%, #071a1c 75%); }
+    #all-stage { position: absolute; inset: 0; }
+    #all-cam { position: absolute; inset: 0; }
+    .all-head { position: absolute; left: 120px; top: 92px; font-weight: 900; font-size: 74px; letter-spacing: -1.5px; color: #eaf7f4; }
+    .all-head .w { display: inline-block; margin-right: 18px; }
+    .all-tile { position: absolute; width: 540px; height: 360px; border-radius: 30px; overflow: hidden;
+      background: linear-gradient(165deg, #183235 0%, #11252a 100%); border: 1.5px solid rgba(143,220,205,0.13); box-shadow: 0 30px 70px rgba(0,0,0,0.45); }
+    .all-tile .lb { position: absolute; left: 34px; bottom: 28px; }
+    .all-tile .lb b { display: block; font-weight: 900; font-size: 34px; color: #eaf7f4; }
+    .all-tile .lb span { display: block; margin-top: 4px; font-family: "JetBrains Mono", monospace; font-size: 19px; color: #8fdccd; }
+    .all-toggle { position: absolute; left: 34px; right: 34px; height: 52px; display: flex; align-items: center; justify-content: space-between; font-size: 23px; font-weight: 700; color: #cfe3df; }
+    .all-toggle .sw { width: 70px; height: 40px; border-radius: 20px; background: rgba(255,255,255,0.14); position: relative; }
+    .all-toggle .kn { position: absolute; left: 4px; top: 4px; width: 32px; height: 32px; border-radius: 50%; background: #fff; }
+    .all-left { position: absolute; left: 190px; height: 40px; display: flex; align-items: center; gap: 10px; font-family: "JetBrains Mono", monospace; font-size: 19px; color: #cfe3df; }
+    .all-left i { width: 12px; height: 12px; border-radius: 3px; background: #ff856b; display: block; }
+    .all-block { position: absolute; border-radius: 10px; }
+    .all-bar { position: absolute; bottom: 120px; width: 22px; border-radius: 6px; background: #3dbe8b; }
+    #all-grain { position: absolute; inset: -60px; opacity: 0.08; mix-blend-mode: overlay; pointer-events: none;
+      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 1.6 -0.3'/></filter><rect width='240' height='240' filter='url(%23n)'/></svg>"); }
+    #all-vignette { position: absolute; inset: 0; pointer-events: none; background: radial-gradient(ellipse 75% 75% at 50% 50%, rgba(0,0,0,0) 55%, rgba(0,0,0,0.5) 100%); }
+  </style>
+
+  <div id="root" data-composition-id="06-everything" data-width="1920" data-height="1080" data-duration="4">
+    <div id="all-bg" class="clip" data-start="0" data-duration="4" data-track-index="0"></div>
+    <div id="all-stage" class="clip" data-start="0" data-duration="4" data-track-index="1" data-layout-allow-overflow>
+      <div id="all-cam" data-layout-allow-overflow>
+        <div id="all-head" class="all-head"><span class="w">And</span><span class="w">the</span><span class="w">rest</span><span class="w">of</span><span class="w">the</span><span class="w">job.</span></div>
+
+        <!-- 1 · Monitor -->
+        <div class="all-tile" id="all-t0" style="left:120px; top:230px">
+          <svg style="position:absolute; left:34px; top:30px" width="190" height="190" viewBox="0 0 190 190">
+            <circle cx="95" cy="95" r="80" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="16"/>
+            <circle id="all-health" cx="95" cy="95" r="80" fill="none" stroke="#3dbe8b" stroke-width="16" stroke-linecap="round" transform="rotate(-90 95 95)" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/>
+          </svg>
+          <div id="all-score" style="position:absolute; left:34px; top:30px; width:190px; height:190px; display:grid; place-items:center; font-weight:900; font-size:64px; color:#eaf7f4">0</div>
+          <div style="position:absolute; left:250px; top:62px; font-size:23px; line-height:1.7; color:#cfe3df">• Disk space<br>• Memory pressure<br>• Battery health</div>
+          <div class="lb"><b>Monitor</b><span>health · CPU · memory · battery</span></div>
+        </div>
+
+        <!-- 2 · Speed -->
+        <div class="all-tile" id="all-t1" style="left:690px; top:230px">
+          <div class="all-toggle" style="top:34px">Flush DNS cache<div class="sw" id="all-sw0"><div class="kn" id="all-kn0"></div></div></div>
+          <div class="all-toggle" style="top:98px">Reset Quick Look<div class="sw" id="all-sw1"><div class="kn" id="all-kn1"></div></div></div>
+          <div class="all-toggle" style="top:162px">Free up RAM<div class="sw" id="all-sw2"><div class="kn" id="all-kn2"></div></div></div>
+          <div class="lb"><b>Speed</b><span>startup items · maintenance</span></div>
+        </div>
+
+        <!-- 3 · Apps -->
+        <div class="all-tile" id="all-t2" style="left:1260px; top:230px">
+          <div id="all-app" style="position:absolute; left:40px; top:44px; width:120px; height:120px; border-radius:28px; background:linear-gradient(160deg,#ff9f7f,#ff6f5a); box-shadow:0 12px 30px rgba(0,0,0,0.4)"></div>
+          <div class="all-left" id="all-l0" style="top:30px"><i></i>Preferences</div>
+          <div class="all-left" id="all-l1" style="top:72px"><i></i>Caches</div>
+          <div class="all-left" id="all-l2" style="top:114px"><i></i>Containers</div>
+          <div class="all-left" id="all-l3" style="top:156px"><i></i>Launch agents</div>
+          <div id="all-removed" style="position:absolute; left:40px; top:70px; display:flex; align-items:center; gap:16px; font-weight:900; font-size:34px; color:#eaf7f4; opacity:0"><svg width="54" height="54" viewBox="0 0 22 22"><circle cx="11" cy="11" r="11" fill="#3dbe8b"/><path d="M6.5 11.3 L9.6 14.2 L15.6 8" stroke="#062a1d" stroke-width="2.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Removed<br><span style="font-family:JetBrains Mono,monospace; font-weight:400; font-size:20px; color:#8fdccd">app + 4 leftovers</span></span></div>
+          <div class="lb"><b>Apps</b><span>uninstall with every leftover</span></div>
+        </div>
+
+        <!-- 4 · Space -->
+        <div class="all-tile" id="all-t3" style="left:120px; top:620px">
+          <div id="all-blocks"></div>
+          <div class="lb"><b>Space</b><span>see what takes room</span></div>
+        </div>
+
+        <!-- 5 · Protect -->
+        <div class="all-tile" id="all-t4" style="left:690px; top:620px">
+          <svg style="position:absolute; left:200px; top:28px" width="140" height="170" viewBox="0 0 140 170">
+            <path d="M70 6 L128 28 V78 C128 120 104 150 70 164 C36 150 12 120 12 78 V28 Z" fill="rgba(61,190,139,0.12)" stroke="#5fd3a5" stroke-width="6" stroke-linejoin="round"/>
+            <path d="M44 84 L62 102 L98 64" fill="none" stroke="#5fd3a5" stroke-width="9" stroke-linecap="round" stroke-linejoin="round" id="all-shield-check" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/>
+          </svg>
+          <div id="all-scanline" style="position:absolute; left:170px; width:200px; top:30px; height:4px; border-radius:2px; background:#7be0b8; box-shadow:0 0 18px #7be0b8"></div>
+          <div class="lb"><b>Protect</b><span>where malware usually hides</span></div>
+        </div>
+
+        <!-- 6 · Menu bar -->
+        <div class="all-tile" id="all-t5" style="left:1260px; top:620px">
+          <div style="position:absolute; left:34px; right:34px; top:26px; height:40px; border-radius:12px; background:rgba(0,0,0,0.3); display:flex; align-items:center; justify-content:flex-end; gap:16px; padding:0 16px; font-family:'JetBrains Mono',monospace; font-size:17px; color:#cfe3df">
+            <span>CPU 12%</span><span>RAM 61%</span><img src="assets/messy-icon.png" style="width:24px; height:24px; border-radius:6px" alt="" />
+          </div>
+          <div id="all-bars"></div>
+          <div class="lb"><b>Menu bar</b><span>live, one click away</span></div>
+        </div>
+      </div>
+    </div>
+    <div id="all-grain" class="clip" data-start="0" data-duration="4" data-track-index="2" data-layout-allow-overflow></div>
+    <div id="all-vignette" class="clip" data-start="0" data-duration="4" data-track-index="3"></div>
+  </div>
+
+  <script>
+    (function () {
+      const DURATION = 4;
+      const tl = gsap.timeline({ paused: true });
+      const $ = (id) => document.getElementById(id);
+
+      [...$("all-head").children].forEach((w, i) =>
+        tl.fromTo(w, { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.35, ease: "power3.out" }, i * 0.07));
+
+      // Tiles land on the beat, left to right, top to bottom (18.0 … 20.5 s).
+      for (let i = 0; i < 6; i++) {
+        tl.fromTo($("all-t" + i), { opacity: 0, scale: 0.72, y: 90, rotation: (i % 2 ? 4 : -4) },
+          { opacity: 1, scale: 1, y: 0, rotation: 0, duration: 0.5, ease: "back.out(1.8)" }, i * 0.5);
+      }
+
+      // 1 · health ring and score.
+      tl.to($("all-health"), { strokeDashoffset: 0.4, duration: 1.2, ease: "power3.out" }, 0.2);
+      const sc = { v: 0 };
+      tl.to(sc, { v: 60, duration: 1.2, ease: "power3.out", onUpdate: () => { $("all-score").textContent = Math.round(sc.v); } }, 0.2);
+      tl.set($("all-score"), { textContent: "0" }, 0);
+
+      // 2 · toggles switch on one after another.
+      [0, 1, 2].forEach((k) => {
+        const t = 0.8 + k * 0.28;
+        tl.to($("all-kn" + k), { x: 30, duration: 0.22, ease: "back.out(2)" }, t);
+        tl.to($("all-sw" + k), { background: "#3dbe8b", duration: 0.2, ease: "power1.out" }, t);
+      });
+
+      // 3 · leftovers appear, then fold into the app and it all leaves.
+      [0, 1, 2, 3].forEach((k) => tl.fromTo($("all-l" + k), { opacity: 0, x: 30 }, { opacity: 1, x: 0, duration: 0.25, ease: "power2.out" }, 1.15 + k * 0.08));
+      [0, 1, 2, 3].forEach((k) => tl.to($("all-l" + k), { x: -130, opacity: 0, scale: 0.4, duration: 0.3, ease: "power3.in" }, 2.3 + k * 0.06));
+      tl.to($("all-app"), { scale: 0, rotation: 30, opacity: 0, duration: 0.3, ease: "back.in(2)" }, 2.75);
+      tl.fromTo($("all-removed"), { opacity: 0, scale: 0.7 }, { opacity: 1, scale: 1, duration: 0.35, ease: "back.out(2.4)" }, 3.0);
+
+      // 4 · treemap blocks assemble, one big coral one.
+      const blocks = [
+        [34, 30, 250, 180, "#ff856b"], [292, 30, 214, 86, "#2fb07c"], [292, 124, 104, 86, "#3dbe8b"],
+        [404, 124, 102, 86, "#5fd3a5"], [34, 218, 120, 40, "#1f7d5c"], [162, 218, 344, 40, "#7be0b8"],
+      ];
+      blocks.forEach((b, k) => {
+        const el = document.createElement("div");
+        el.className = "all-block";
+        el.id = "all-block-" + k;
+        Object.assign(el.style, { left: b[0] + "px", top: b[1] + "px", width: b[2] + "px", height: b[3] + "px", background: b[4] });
+        $("all-blocks").appendChild(el);
+        tl.fromTo(el, { scale: 0, transformOrigin: "0% 0%" }, { scale: 1, duration: 0.35, ease: "power3.out" }, 1.6 + k * 0.07);
+      });
+
+      // 5 · a scan line passes over the shield, then the check draws.
+      tl.fromTo($("all-scanline"), { y: 0, opacity: 0 }, { y: 0, opacity: 1, duration: 0.1 }, 2.1);
+      tl.to($("all-scanline"), { y: 160, duration: 0.8, ease: "sine.inOut" }, 2.1);
+      tl.to($("all-scanline"), { opacity: 0, duration: 0.15 }, 2.9);
+      tl.to($("all-shield-check"), { strokeDashoffset: 0, duration: 0.35, ease: "power2.out" }, 2.85);
+
+      // 6 · live bars, driven by time so any frame can be seeked.
+      const bars = [];
+      for (let k = 0; k < 16; k++) {
+        const el = document.createElement("div");
+        el.className = "all-bar";
+        el.id = "all-bar-" + k;
+        el.style.left = 36 + k * 29 + "px";
+        $("all-bars").appendChild(el);
+        bars.push(el);
+      }
+      const live = { t: 0 };
+      const drawBars = () => bars.forEach((el, k) => {
+        const h = 26 + 70 * (0.5 + 0.5 * Math.sin(live.t * 5.2 + k * 0.75) * Math.cos(live.t * 2.1 + k * 0.31));
+        el.style.height = h.toFixed(1) + "px";
+        el.style.background = h > 80 ? "#ff856b" : "#3dbe8b";
+      });
+      drawBars();
+      tl.to(live, { t: DURATION, duration: DURATION, ease: "none", onUpdate: drawBars }, 0);
+
+      tl.fromTo($("all-cam"), { scale: 1 }, { scale: 1.05, duration: DURATION, ease: "none", transformOrigin: "50% 60%" }, 0);
+
+      let g = 23;
+      for (let t = 0; t < DURATION; t += 1 / 12) {
+        g = (g * 48271) % 2147483647;
+        tl.set($("all-grain"), { x: (g % 60) - 30, y: ((g >> 8) % 60) - 30 }, t);
+      }
+
+      tl.set({}, {}, DURATION);
+      window.__timelines = window.__timelines || {};
+      window.__timelines["06-everything"] = tl;
+    })();
+  </script>
+</template>

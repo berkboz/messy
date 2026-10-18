@@ -1,170 +1,116 @@
 ---
 format: 1920x1080
-duration: 25s
-message: "A free, open-source Mac cleaner: Messy finds the mess, a little broom sweeps it up, and nothing is deleted on its own"
-arc: Hook → Product intro → Demo → Proof → Features → Brand outro
+duration: 32s
+message: "A free, open-source Mac cleaner that asks for nothing: Messy finds the mess, a little broom sweeps it up, and nothing changes until you press Run"
+arc: Mess → Tension (the asks) → One-cut resolution (the sweep) → Demo → Proof → Breadth → Trust slams → One line, then the lockup
 audience: Mac users who read brk.bz; developers and people who use a cleaner a few times a year
 mode: autonomous
-music: none
+music: host
 ---
 
 ## Video direction
 
-- **Palette** (from `frame.md`): canvas `bg` deep ink-teal; display text `text`; secondary lines `text-muted`; **`primary` mint-green = clean** (the broom, success, buttons); **`mess` coral = mess** (dust, found amounts, the squiggle under the wordmark). Cards use `card-tinted`. Never introduce other hues.
-- **Type**: display/body by role from `frame.md` (Nunito, rounded). Sentence case, no exclamation marks. The brand name is always the lowercase wordmark "messy" with a hand-drawn coral squiggle under it.
-- **Cast**: the broom (hero, `assets/mascot-*.png`) and the dust bunnies (the mess, `assets/dust-*.png`). Characters are cut-outs over the canvas with a soft contact shadow; they move with springy-but-settled motion, never floaty.
-- **Motion grammar**: long-tail `power3` eases, smooth over bouncy except the broom's hop and the button press. No voice-over: reveals are paced to the on-screen lines — each line enters on its own beat, spread across the shot; nothing is dumped at t=0. Holds are still (a subtle jitter on the dust at most).
-- **App windows**: real screenshots on rounded windows with a soft shadow, gently tilted in 3D on entry and settling flat; never rebuilt in HTML.
-- **Rhythm**: Frame 2 ends on a held beat (the name lands); Frame 4's last window is the held read before the faster Frame 5; Frame 6 holds the lockup to the final frame.
-- **Negative list**: no front-load-then-freeze slides; no screensaver drift where everything floats independently; no cursor arrows except the single click in Frame 3; no browser chrome; no purple-blue AI gradients; nothing important in the bottom ~17%.
+Rebuilt in October 2026 after studying the references saved in Raindrop (Launch Video and Video Agent → Inspiration): Titouan Gillet's breakdowns (Cofounder, Cloudflare, Firecrawl, Motionly), Ondo, State Machines, wabi, Kevin Ngo's procedural riso film, Koldo Huici's infinite zoom, 2irl4u's rebuilt UI, Kyle Anthony's editorial motion, dhruvxr's macro UI cuts, isaac.edits on SFX, and N01ennn's "Opus 5.5 into a studio" guide.
 
-## Frame 1 — Dust settles
+What we take, and where:
 
-- scene: Dark field; short lines appear one at a time while dust bunnies roll in and settle
-- voiceover: ""
-- duration: 3.5s
-- transition_in: crossfade
+- **The form matches the pitch** (Firecrawl: the logo builds itself out of the product's own data). The coral scribble of mess, drawn across the real cache folders in Frame 1, untangles into the squiggle under the wordmark in Frame 3.
+- **One persistent motif** (Kevin Ngo's dot): the coral line runs from the first shot to the lockup.
+- **Tension buried mid-film, resolved in one cut** (Cloudflare): a stack of helper / password / trial / account dialogs, wiped by one broom stroke on the impact.
+- **Rebuilt UI, not screenshots** (Ondo, 2irl4u): the Check up screen, result cards, Run button, ring, toggles and treemap are HTML, large, isolated, each with its own motion. Real copy and real numbers from the app.
+- **Counted, not claimed** (Firecrawl): the junk amount counts up on the card.
+- **Payoff by one line held alone** (Cloudflare): "The cleaner you can read." over the app's real source, then the lockup and URL.
+- **Rhythm and sound** (isaac.edits, dhruvxr, Koldo): 120 BPM, every cut on a beat or bar, a sound on every hit, music and effects baked into one soundtrack (`design/sfx/make-soundtrack.swift`).
+- **Texture** (Kevin Ngo, Koldo): stepped film grain and a vignette on every frame, so nothing reads as flat digital.
+
+Banned defaults (N01ennn): a centred title on a gradient with everything fading in; screenshots as the hero; uniform fades; motion with no sound.
+
+Palette from `frame.md`: ink-teal ground, `text`, `text-muted`, mint = clean, coral = mess. Type: Nunito 900 for display (the wordmark's face), JetBrains Mono for paths, labels and code.
+
+## Frame 1 — The mess
+
+- duration: 4s
+- transition_in: cut
 - status: animated
-- src: compositions/frames/01-dust.html
+- src: compositions/frames/01-mess.html
 - type: hook
-- persuasion: Pain validation
-- beat: recognition + mild frustration
-- blueprint: kinetic-type-beats (Adapt)
-- asset_candidates: assets/dust-idle.png — fluffy dust bunny with a small smile; assets/dust-scared.png — the dust bunny wide-eyed, about to be swept
-- focal: assets/dust-idle.png
-- roles: dust-idle = cutout (three copies, different sizes) · dust-scared = cutout (swap in for one bunny at the end)
-- on_screen: "Your Mac collects dust." / "Caches. Logs. Leftovers."
+- on_screen: "Your Mac keeps everything." / "Caches. Logs. Leftovers."
 
-Adapt: keep the slow 2-statement relay with each line landing alone; the "payoff" is a dust bunny turning scared instead of a logo.
-Scene 1 (0.0–1.3s): "Your Mac collects dust." assembles word by word (per-word staggered reveal → `dynamic-content-sequencing`), left-aligned in the upper third, display size; one dust bunny rolls in from the left and settles lower-right — asymmetric 60/40, 2 depth layers.
-Scene 2 (1.3–2.6s): the first line dims to `text-muted`; "Caches. Logs. Leftovers." slams in word by word below it (kinetic beat-slam → `kinetic-beat-slam`), each word coral; two more dust bunnies drop in beside the first on the same beats.
-Scene 3 (2.6–3.5s): hold the read; the front dust bunny's image hard-swaps to the scared face (instant swap, no fade) as if it noticed something coming from the right. Stillness otherwise.
+The real folders Messy cleans fall and pile up on the half-beat; the coral scribble tangles across them; two dust bunnies land on top.
 
-narrativeRole: open on a feeling every Mac user knows, in plain words, before any product appears.
-keyMessage: clutter builds up quietly.
+## Frame 2 — The asks
 
-## Frame 2 — Meet messy
-
-- scene: The broom hops into the centre, sparkles pop; the "messy" wordmark writes itself with its coral squiggle, then one line of promise
-- voiceover: ""
-- duration: 3.5s
-- transition_in: zoom-through
+- duration: 4s
+- transition_in: cut
 - status: animated
-- src: compositions/frames/02-meet.html
+- src: compositions/frames/02-asks.html
+- type: problem
+- on_screen: "Most cleaners want more than your mess."
+
+Generic system-style dialogs (helper tool, Full Disk Access, free trial, account, password, scareware, background item, upsell) slam onto a stack, one per beat; the room closes in; a riser into the cut.
+
+## Frame 3 — One sweep
+
+- duration: 2s
+- transition_in: cut
+- status: animated
+- src: compositions/frames/03-sweep.html
 - type: product_intro
-- persuasion: Friendly reveal
-- beat: curiosity → delight
-- blueprint: titlecard-reveal (Adapt)
-- asset_candidates: assets/mascot-happy.png — the broom hopping with sparkles; assets/messy-icon.png — app icon
-- focal: assets/mascot-happy.png
-- roles: mascot-happy = cutout (hero, left of centre) · messy-icon = supporting (small, beside the wordmark)
-- on_screen: "messy" (wordmark) / "A free, open-source Mac cleaner."
+- on_screen: "messy" / "free · open source · for your Mac"
 
-Adapt: keep the three-beat title prelude (mark pop → name → tagline); the mark is the broom character, and the name is the wordmark with its squiggle drawn on.
-Scene 1 (0.0–1.0s): the broom springs up from below centre-left with a squash-and-stretch hop (button-press spring → `press-release-spring`), three small mint sparkles pop around it — centered-left hero, ~40% of frame height.
-Scene 2 (1.0–2.1s): to its right, the lowercase "messy" wordmark appears letter by letter (per-word staggered reveal at letter granularity → `dynamic-content-sequencing`) and the coral squiggle draws itself under it left to right (SVG self-draw → `svg-path-draw`); the small app icon fades in before the wordmark. Rule-of-thirds, wordmark on the right third line.
-Scene 3 (2.1–3.5s): "A free, open-source Mac cleaner." rises in under the wordmark in `text-muted`; then a held read — the broom settles, everything still. (Held beat.)
+Impact. The broom crosses the frame in one stroke, flicking every dialog away; the brand ground follows it; the scribble untangles into the squiggle; the wordmark lands on it.
 
-narrativeRole: name the product and state the value in one breath.
-keyMessage: there is a free, friendly cleaner for this.
+## Frame 4 — One button
 
-## Frame 3 — One button
-
-- scene: The real app window floats in on "Let's find the mess.", the Scan button is pressed, and the window swaps to the scan in progress
-- voiceover: ""
-- duration: 5s
-- transition_in: crossfade
+- duration: 4s
+- transition_in: cut
 - status: animated
-- src: compositions/frames/03-checkup.html
+- src: compositions/frames/04-scan.html
 - type: key_feature
-- persuasion: Show-don't-tell proof
-- beat: ease
-- blueprint: device-surface-showcase (Adapt)
-- asset_candidates: assets/screen-checkup.png — app window, "Let's find the mess." with the broom in a ring and a green Scan button; assets/screen-scanning.png — app window mid-scan, "Hunting for mess… 40%"
-- focal: assets/screen-checkup.png
-- roles: screen-checkup = cutout (window, centre-right) · screen-scanning = cutout (replaces it in place)
-- on_screen: "One button finds the mess."
+- on_screen: "Let's find the mess." / "Hunting for mess… N%"
 
-Adapt: keep the held device surface whose screens cycle; one click drives the cycle instead of a scroll.
-Scene 1 (0.0–1.4s): the app window tilts in from slightly below and settles flat, centre-right, ~62% of frame width, soft shadow under it (push / focus → `multi-phase-camera`, gentle); the headline "One button finds the mess." enters top-left as the window lands — asymmetric 30/70, 3 depth layers (canvas, window, headline).
-Scene 2 (1.4–2.4s): a single cursor glides to the window's Scan button, presses it with a ripple (cursor click + ripple → `cursor-click-ripple`); the button compresses and springs.
-Scene 3 (2.4–3.6s): the window's content scale-swaps in place to the scanning screen (scale-swap → `scale-swap-transition`), the cursor fades away; a slow zoom-to-target eases toward the ring with the sweeping broom (→ `coordinate-target-zoom`, small amount).
-Scene 4 (3.6–5.0s): hold on the scanning window; still.
+Macro on the Scan button, the click on the beat, the camera pulls back, the ring fills and five module chips turn green on the beat.
 
-narrativeRole: show the core interaction — one press, everything is checked.
-keyMessage: it is effortless.
+## Frame 5 — You press Run
 
-## Frame 4 — You decide
-
-- scene: The results window; the banner with the coral amount comes into focus, then two calm promises
-- voiceover: ""
-- duration: 4.5s
-- transition_in: crossfade
+- duration: 4s
+- transition_in: cut
 - status: animated
-- src: compositions/frames/04-results.html
+- src: compositions/frames/05-results.html
 - type: key_feature
-- persuasion: Risk reversal
-- beat: control + peace of mind
-- blueprint: device-surface-showcase (Adapt)
-- asset_candidates: assets/screen-results.png — app window "Here's the mess" with a "Found 86.8 MB to clean" banner, the broom and two dust bunnies, and result cards
-- focal: assets/screen-results.png
-- roles: screen-results = cutout (window, left)
 - on_screen: "Nothing changes until you press Run." / "Everything goes to the Trash first."
 
-Adapt: same held window idea; this time the camera reads one region (the banner) and copy carries the promise.
-Scene 1 (0.0–1.5s): the results window settles left, ~58% of width; the camera eases toward its top banner with the coral "86.8 MB" (zoom-to-target → `coordinate-target-zoom`), and a soft coral glow marks the amount (keyword glow → `asr-keyword-glow`).
-Scene 2 (1.5–2.8s): on the right, "Nothing changes until you press Run." enters line by line (per-word staggered reveal → `dynamic-content-sequencing`) — asymmetric 60/40.
-Scene 3 (2.8–4.5s): "Everything goes to the Trash first." enters below it in `text-muted`; then a held read, camera still. (Held beat before Frame 5.)
+Three result cards fly in from depth, the junk amount counts up, Run is pressed, the cards fold into the Trash.
 
-narrativeRole: remove the fear of a cleaner deleting the wrong thing.
-keyMessage: you stay in control.
+## Frame 6 — The rest of the job
 
-## Frame 5 — Everything else
-
-- scene: Three app windows fan out as cards with label pills, then the trust line
-- voiceover: ""
-- duration: 4.5s
-- transition_in: push-slide LEFT
-- status: animated
-- src: compositions/frames/05-features.html
-- type: benefits
-- persuasion: Value stacking
-- beat: confidence
-- blueprint: grid-card-assemble (Adapt)
-- asset_candidates: assets/screen-monitor.png — Monitor pane with health ring and cards; assets/screen-speed.png — Speed pane with maintenance tasks; assets/screen-scanning.png — Check up in progress
-- focal: assets/screen-monitor.png
-- roles: screen-monitor = cutout (centre card) · screen-speed = cutout (right card) · screen-scanning = cutout (left card)
-- on_screen: "Check up" / "Monitor" / "Speed" / "No helper running as root. No account. No telemetry."
-
-Adapt: keep the self-assembling labelled tiles; three window cards instead of a grid, then one trust line as the payoff.
-Scene 1 (0.0–1.8s): three window cards start stacked at centre and expand outward into a slight fan — left, centre (raised, largest), right (cluster→outward expansion → `center-outward-expansion`); each gets a mint label pill under it as it lands ("Check up", "Monitor", "Speed"), staggered — triptych, 3 depth layers.
-Scene 2 (1.8–3.0s): the fan eases back a little and dims to ~70% while the trust line "No helper running as root. No account. No telemetry." assembles phrase by phrase across the upper third (per-word staggered reveal → `dynamic-content-sequencing`).
-Scene 3 (3.0–4.5s): hold the read; the three phrases are lit, still.
-
-narrativeRole: show breadth without a feature list, then the trust line.
-keyMessage: it does what the big cleaners do, quietly.
-
-## Frame 6 — Swept clean
-
-- scene: The broom sweeps across the frame, the dust bunnies tumble and burst into sparkles, revealing the icon, the wordmark and the URL
-- voiceover: ""
 - duration: 4s
-- transition_in: blur-crossfade
+- transition_in: cut
 - status: animated
-- src: compositions/frames/06-outro.html
+- src: compositions/frames/06-everything.html
+- type: benefits
+- on_screen: "And the rest of the job." / Monitor · Speed · Apps · Space · Protect · Menu bar
+
+Six tiles land on the beat, each doing its own thing: a health score, toggles, leftovers folding into an app, a treemap, a shield scan, live bars.
+
+## Frame 7 — Trust
+
+- duration: 4s
+- transition_in: cut
+- status: animated
+- src: compositions/frames/07-trust.html
+- type: proof
+- on_screen: "No helper running as root." / "No account." / "No telemetry."
+
+Three full-bleed slams on mint, ink and coral, hard cuts on the stabs.
+
+## Frame 8 — The cleaner you can read
+
+- duration: 6s
+- transition_in: cut
+- status: animated
+- src: compositions/frames/08-outro.html
 - type: brand_outro
-- persuasion: Inevitability
-- beat: satisfaction
-- blueprint: logo-assemble-lockup (Adapt)
-- asset_candidates: assets/mascot-sweep.png — the broom tilted mid-sweep with dust puffs; assets/dust-scared.png — dust bunny about to be swept; assets/dust-gone.png — dust dissolving into sparkles; assets/messy-icon.png — app icon
-- focal: assets/messy-icon.png
-- roles: mascot-sweep = cutout (moves across) · dust-scared = cutout (three on the floor line) · dust-gone = cutout (replaces each bunny as it is swept) · messy-icon = cutout (lockup centre)
-- on_screen: "messy" (wordmark) / "Free & open source" / "brk.bz/messy"
+- on_screen: "The cleaner you can read." / "messy" / "free & open source · macOS 14+" / "brk.bz/messy"
 
-Adapt: keep "elements clear the stage and the lockup draws itself in"; the clearing is the broom sweeping the dust.
-Scene 1 (0.0–1.6s): three scared dust bunnies sit along a floor line in the lower-middle; the broom sweeps in from the left across the frame (rocking as it goes), and as it reaches each bunny the bunny hard-swaps to the dust-gone sparkle puff and fades (instant swap, a left→right wave).
-Scene 2 (1.6–2.8s): behind the broom's exit, the app icon pops in at centre (button-press spring → `press-release-spring`), the "messy" wordmark appears under it and its coral squiggle draws on (SVG self-draw → `svg-path-draw`) — centered lockup, icon ~22% of frame height.
-Scene 3 (2.8–4.0s): "Free & open source" and "brk.bz/messy" fade up under the lockup in `text-muted` / `primary`; hold to the final frame, still.
-
-narrativeRole: land the brand and where to get it.
-keyMessage: free, open source, brk.bz/messy.
+The line alone over the app's real source code; hard cut on the bar to the icon, wordmark, squiggle and URL; the broom hops in; hold.

@@ -1,0 +1,61 @@
+<template>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+  <style>
+    #root { position: absolute; inset: 0; width: 1920px; height: 1080px; overflow: hidden; font-family: "Nunito", sans-serif; }
+    #trust-bg { position: absolute; inset: 0; background: #071a1c; }
+    #trust-stage { position: absolute; inset: 0; }
+    .trust-card { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; opacity: 0; }
+    .trust-card h2 { margin: 0; font-weight: 900; font-size: 168px; letter-spacing: -5px; line-height: 1; text-align: center; }
+    .trust-card p { margin: 44px 0 0; font-family: "JetBrains Mono", monospace; font-size: 34px; letter-spacing: 0.5px; }
+    .trust-card .ix { position: absolute; left: 80px; top: 70px; font-family: "JetBrains Mono", monospace; font-size: 26px; }
+    #trust-c0 { background: #3dbe8b; color: #062a1d; }
+    #trust-c1 { background: #071a1c; color: #eaf7f4; }
+    #trust-c1 p { color: #8fdccd; }
+    #trust-c2 { background: #ff856b; color: #2a0f08; }
+    #trust-grain { position: absolute; inset: -60px; opacity: 0.12; mix-blend-mode: overlay; pointer-events: none;
+      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 1.6 -0.3'/></filter><rect width='240' height='240' filter='url(%23n)'/></svg>"); }
+    #trust-vignette { position: absolute; inset: 0; pointer-events: none; background: radial-gradient(ellipse 75% 75% at 50% 50%, rgba(0,0,0,0) 60%, rgba(0,0,0,0.35) 100%); }
+  </style>
+
+  <div id="root" data-composition-id="07-trust" data-width="1920" data-height="1080" data-duration="4">
+    <div id="trust-bg" class="clip" data-start="0" data-duration="4" data-track-index="0"></div>
+    <div id="trust-stage" class="clip" data-start="0" data-duration="4" data-track-index="1" data-layout-allow-overflow>
+      <div class="trust-card" id="trust-c0"><span class="ix">01 / 03</span><h2 id="trust-h0">No helper<br>running as root.</h2><p id="trust-p0">admin tasks ask for your password first</p></div>
+      <div class="trust-card" id="trust-c1"><span class="ix">02 / 03</span><h2 id="trust-h1">No account.</h2><p id="trust-p1">download it and open it</p></div>
+      <div class="trust-card" id="trust-c2"><span class="ix">03 / 03</span><h2 id="trust-h2">No telemetry.</h2><p id="trust-p2">it only goes online when you press a button</p></div>
+    </div>
+    <div id="trust-grain" class="clip" data-start="0" data-duration="4" data-track-index="2" data-layout-allow-overflow></div>
+    <div id="trust-vignette" class="clip" data-start="0" data-duration="4" data-track-index="3"></div>
+  </div>
+
+  <script>
+    (function () {
+      const DURATION = 4;
+      const tl = gsap.timeline({ paused: true });
+      const $ = (id) => document.getElementById(id);
+
+      // Hard cuts on the slams (22.0, 23.25, 24.5 s): each card replaces the last outright.
+      const T = [0, 1.25, 2.5];
+      T.forEach((t, i) => {
+        tl.set($("trust-c" + i), { opacity: 1 }, t);
+        if (i > 0) tl.set($("trust-c" + (i - 1)), { opacity: 0 }, t);
+        tl.fromTo($("trust-h" + i), { scale: 1.35, filter: "blur(18px)", opacity: 0.4 },
+          { scale: 1, filter: "blur(0px)", opacity: 1, duration: 0.24, ease: "power4.out" }, t);
+        tl.to($("trust-h" + i), { scale: 0.97, duration: i === 2 ? 1.5 : 1.0, ease: "none" }, t + 0.24);
+        tl.fromTo($("trust-p" + i), { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.35, ease: "power3.out" }, t + 0.22);
+        tl.to($("trust-stage"), { x: 10, y: -8, duration: 0.03, ease: "none" }, t);
+        tl.to($("trust-stage"), { x: 0, y: 0, duration: 0.22, ease: "power2.out" }, t + 0.03);
+      });
+
+      let g = 29;
+      for (let t = 0; t < DURATION; t += 1 / 12) {
+        g = (g * 48271) % 2147483647;
+        tl.set($("trust-grain"), { x: (g % 60) - 30, y: ((g >> 8) % 60) - 30 }, t);
+      }
+
+      tl.set({}, {}, DURATION);
+      window.__timelines = window.__timelines || {};
+      window.__timelines["07-trust"] = tl;
+    })();
+  </script>
+</template>

@@ -1,0 +1,104 @@
+<template>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+  <style>
+    #root { position: absolute; inset: 0; width: 1920px; height: 1080px; overflow: hidden; font-family: "Nunito", sans-serif; }
+    #out-bg { position: absolute; inset: 0; background: #071a1c; }
+    #out-stage { position: absolute; inset: 0; }
+    #out-read { position: absolute; inset: 0; }
+    #out-code { position: absolute; left: 160px; top: 0; width: 1600px; font-family: "JetBrains Mono", monospace; font-size: 30px; line-height: 1.75; color: #8fdccd; opacity: 0.16; white-space: pre; }
+    #out-code .k { color: #ff856b; }
+    #out-code .c { color: #5fd3a5; }
+    #out-line { position: absolute; left: 0; width: 1920px; top: 452px; text-align: center; font-weight: 900; font-size: 150px; letter-spacing: -4px; color: #eaf7f4; }
+    #out-line .w { display: inline-block; margin: 0 18px; }
+    #out-line .r { color: #ff856b; }
+    #out-lock { position: absolute; inset: 0; opacity: 0; background: radial-gradient(ellipse 55% 55% at 50% 45%, #0f3a37 0%, #071a1c 72%); }
+    #out-icon { position: absolute; left: 840px; top: 150px; width: 240px; height: 240px; border-radius: 54px; box-shadow: 0 30px 80px rgba(0,0,0,0.5); }
+    #out-word { position: absolute; left: 0; width: 1920px; top: 410px; text-align: center; font-weight: 900; font-size: 190px; line-height: 1; letter-spacing: -5px; color: #eaf7f4; }
+    #out-squig { position: absolute; left: 0; top: 0; }
+    #out-free { position: absolute; left: 0; width: 1920px; top: 700px; text-align: center; font-family: "JetBrains Mono", monospace; font-size: 34px; color: #8fdccd; }
+    #out-url { position: absolute; left: 0; width: 1920px; top: 760px; text-align: center; font-weight: 900; font-size: 64px; color: #5fd3a5; letter-spacing: -1px; }
+    #out-broom { position: absolute; left: 1330px; top: 560px; width: 300px; height: 300px; object-fit: contain; }
+    #out-grain { position: absolute; inset: -60px; opacity: 0.09; mix-blend-mode: overlay; pointer-events: none;
+      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 1.6 -0.3'/></filter><rect width='240' height='240' filter='url(%23n)'/></svg>"); }
+    #out-vignette { position: absolute; inset: 0; pointer-events: none; background: radial-gradient(ellipse 75% 75% at 50% 50%, rgba(0,0,0,0) 55%, rgba(0,0,0,0.5) 100%); }
+  </style>
+
+  <div id="root" data-composition-id="08-outro" data-width="1920" data-height="1080" data-duration="6">
+    <div id="out-bg" class="clip" data-start="0" data-duration="6" data-track-index="0"></div>
+    <div id="out-stage" class="clip" data-start="0" data-duration="6" data-track-index="1" data-layout-allow-overflow>
+      <div id="out-read" data-layout-allow-overflow>
+        <div id="out-code"></div>
+        <div id="out-line"><span class="w">The</span><span class="w">cleaner</span><span class="w">you</span><span class="w">can</span><span class="w r">read.</span></div>
+      </div>
+      <div id="out-lock">
+        <img id="out-icon" src="assets/messy-icon.png" alt="" />
+        <div id="out-word">messy</div>
+        <svg id="out-squig" width="1920" height="1080" viewBox="0 0 1920 1080"><path id="out-squig-path" d="M770 640 Q 800 620 830 640 T 890 640 T 950 640 T 1010 640 T 1070 640 T 1130 640" fill="none" stroke="#ff856b" stroke-width="10" stroke-linecap="round" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/></svg>
+        <div id="out-free">free &amp; open source · macOS 14+</div>
+        <div id="out-url">brk.bz/messy</div>
+        <img id="out-broom" src="assets/mascot-happy.png" alt="" />
+      </div>
+    </div>
+    <div id="out-grain" class="clip" data-start="0" data-duration="6" data-track-index="2" data-layout-allow-overflow></div>
+    <div id="out-vignette" class="clip" data-start="0" data-duration="6" data-track-index="3"></div>
+  </div>
+
+  <script>
+    (function () {
+      const DURATION = 6;
+      const tl = gsap.timeline({ paused: true });
+      const $ = (id) => document.getElementById(id);
+
+      // Real lines from Sources/Messy/Util.swift drift past behind the line.
+      const code = [
+        '<span class="c">/// Moves items to the Trash. Messy never deletes anything permanently.</span>',
+        '<span class="k">static func</span> trash(_ urls: [URL]) -> [(URL, String)] {',
+        '    <span class="k">var</span> failed: [(URL, String)] = []',
+        '    <span class="k">for</span> u <span class="k">in</span> urls {',
+        '        <span class="k">do</span> { <span class="k">try</span> FileManager.default.trashItem(at: u, resultingItemURL: <span class="k">nil</span>) }',
+        '        <span class="k">catch</span> { failed.append((u, error.localizedDescription)) }',
+        '    }',
+        '    <span class="k">return</span> failed',
+        '}',
+        '',
+        '<span class="c">/// literals are accepted, so nothing from a file name, plist or the network can end up in a</span>',
+        '<span class="c">/// command that runs as root.</span>',
+        '<span class="k">static func</span> admin(_ commands: [StaticString]) -> AdminResult {',
+        '    <span class="k">let</span> script = commands.map { $0.description }.joined(separator: "; ")',
+        '    <span class="k">let</span> r = run("/usr/bin/osascript", ["-e", "do shell script ..."])',
+        '    <span class="k">if</span> r.status == 0 { <span class="k">return</span> .ok }',
+        '}',
+      ];
+      $("out-code").innerHTML = code.join("\n");
+      tl.fromTo($("out-code"), { y: 120 }, { y: -260, duration: 2.0, ease: "none" }, 0);
+
+      [...$("out-line").children].forEach((w, i) =>
+        tl.fromTo(w, { opacity: 0, y: 40, filter: "blur(10px)" }, { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.45, ease: "power3.out" }, 0.08 + i * 0.14));
+      tl.fromTo($("out-read"), { scale: 1 }, { scale: 1.04, duration: 2, ease: "none" }, 0);
+
+      // Hard cut to the lockup on the bar (28.0 s).
+      tl.set($("out-lock"), { opacity: 1 }, 2.0);
+      tl.set($("out-read"), { opacity: 0 }, 2.0);
+      tl.fromTo($("out-icon"), { scale: 0.3, rotation: -14 }, { scale: 1, rotation: 0, duration: 0.55, ease: "back.out(2.2)" }, 2.0);
+      tl.fromTo($("out-word"), { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.45, ease: "power3.out" }, 2.25);
+      tl.to($("out-squig-path"), { strokeDashoffset: 0, duration: 0.6, ease: "power2.out" }, 2.45);
+      tl.fromTo($("out-free"), { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.4, ease: "power3.out" }, 2.8);
+      tl.fromTo($("out-url"), { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.4, ease: "power3.out" }, 2.95);
+
+      // The broom hops up beside the name and settles; the shot then holds still.
+      tl.fromTo($("out-broom"), { y: 420, rotation: 12 }, { y: -30, rotation: -6, duration: 0.4, ease: "power3.out" }, 2.55);
+      tl.to($("out-broom"), { y: 0, rotation: 0, duration: 0.5, ease: "bounce.out" }, 2.95);
+      tl.fromTo($("out-lock"), { scale: 1.02 }, { scale: 1, duration: 4, ease: "power2.out" }, 2.0);
+
+      let g = 31;
+      for (let t = 0; t < DURATION; t += 1 / 12) {
+        g = (g * 48271) % 2147483647;
+        tl.set($("out-grain"), { x: (g % 60) - 30, y: ((g >> 8) % 60) - 30 }, t);
+      }
+
+      tl.set({}, {}, DURATION);
+      window.__timelines = window.__timelines || {};
+      window.__timelines["08-outro"] = tl;
+    })();
+  </script>
+</template>
