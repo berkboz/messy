@@ -22,10 +22,11 @@ real app screens. No voice-over.
 
 ## Assets
 
-- ../../design/brand/icon-c-clean.png — app icon (two-eyed broom on mint sky); the closing logo lockup.
+- ../../design/brand/messy-icon-clean.png — app icon (broom sweeping dust bunnies on mint sky); the closing logo lockup.
+- ../../Resources/Mascot/dust-idle.png, dust-scared.png, dust-gone.png — dust bunnies (the mess as characters).
 - ../../Resources/Mascot/mascot-idle.png, mascot-sweep.png, mascot-happy.png, mascot-worried.png — mascot poses, transparent.
 - ../../design/brand/sprite-*.png — mascot sprite sheets (sweep, blink, hop) when present.
-- ../../design/shots-v2/checkup.png, scanning.png, results.png, monitor.png, clean.png, speed.png — real app screens (dark theme, 1080x720 @2x).
+- ../../design/shots-v3/checkup.png, scanning.png, results.png, monitor.png; design/screenshots/speed.png — real app screens (dark theme, 1080x720 @2x).
 - ../../Resources/Sounds/*.wav — the app's own synthesized UI sounds; reuse as SFX.
 
 ## Customizations
@@ -35,6 +36,6 @@ real app screens. No voice-over.
 
 ## Notes
 
-- Palette from the icon: mint/teal sky (#0E9F9A, #1FBF73, mint #54D6C2), dark ink background like the site.
+- Palette from the icon: mint/teal sky (#0E9F9A, #1FBF73, mint #54D6C2) for clean, coral #FF856B for mess, dark ink background like the site. Wordmark: lowercase 'messy' with a hand-drawn coral squiggle under it.
 - Never show the user's personal app list or file paths beyond what the screenshots already crop.
 - Wording on screen: plain, sentence case, no exclamation marks.

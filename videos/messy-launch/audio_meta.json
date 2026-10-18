@@ -1,12 +1,53 @@
 {
-  "bgm": { "path": "assets/music/messy-bed.wav", "volume": 0.5, "source": "host" },
+  "bgm": {
+    "path": "assets/music/messy-bed.wav",
+    "volume": 0.5,
+    "source": "host"
+  },
   "bgm_pending": false,
   "voices": [],
   "sfx": [
-    { "frame": 2, "file": "assets/sfx/found.wav", "offset_s": 0.4, "duration_s": 0.75, "source": "host" },
-    { "frame": 3, "file": "assets/sfx/scan.wav", "offset_s": 1.6, "duration_s": 0.85, "source": "host" },
-    { "frame": 4, "file": "assets/sfx/found.wav", "offset_s": 0.3, "duration_s": 0.75, "source": "host" },
-    { "frame": 6, "file": "assets/sfx/trash.wav", "offset_s": 0.2, "duration_s": 0.32, "source": "host" },
-    { "frame": 6, "file": "assets/sfx/done.wav", "offset_s": 1.2, "duration_s": 1.3, "source": "host" }
+    {
+      "frame": 2,
+      "file": "assets/sfx/found.wav",
+      "offset_s": 0.5,
+      "duration_s": 0.75,
+      "source": "host"
+    },
+    {
+      "frame": 3,
+      "file": "assets/sfx/tick.wav",
+      "offset_s": 2.15,
+      "duration_s": 0.05,
+      "source": "host"
+    },
+    {
+      "frame": 3,
+      "file": "assets/sfx/scan.wav",
+      "offset_s": 2.4,
+      "duration_s": 0.85,
+      "source": "host"
+    },
+    {
+      "frame": 4,
+      "file": "assets/sfx/found.wav",
+      "offset_s": 0.85,
+      "duration_s": 0.75,
+      "source": "host"
+    },
+    {
+      "frame": 6,
+      "file": "assets/sfx/trash.wav",
+      "offset_s": 0.5,
+      "duration_s": 0.32,
+      "source": "host"
+    },
+    {
+      "frame": 6,
+      "file": "assets/sfx/done.wav",
+      "offset_s": 1.5,
+      "duration_s": 1.3,
+      "source": "host"
+    }
   ]
 }

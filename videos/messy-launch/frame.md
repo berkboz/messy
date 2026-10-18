@@ -22,6 +22,7 @@ colors:
   card-bg: "rgba(84, 214, 194, 0.06)"
   positive: "#059669"
   negative: "#dc2626"
+  mess: "#FF856B"   # coral: the colour of mess (found junk, dust); mint/green is clean
 
 radii:
   pill: "100px"

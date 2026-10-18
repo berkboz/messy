@@ -1,0 +1,287 @@
+<template>
+  <div
+    id="root"
+    data-composition-id="04-results"
+    data-width="1920"
+    data-height="1080"
+    data-start="0"
+    data-duration="5"
+  >
+    <style>
+
+      #root {
+        position: relative;
+        width: 1920px;
+        height: 1080px;
+        overflow: hidden;
+        font-family: "Nunito", ui-rounded, system-ui, sans-serif;
+        color: #eaf7f4;
+      }
+
+      /* full-bleed ground (clip layer, not on #root) */
+      .r04-ground {
+        position: absolute;
+        inset: 0;
+        background:
+          radial-gradient(ellipse 900px 640px at 600px 440px, rgba(31, 191, 115, 0.08), rgba(31, 191, 115, 0) 70%),
+          #071a1c;
+      }
+
+      .r04-stage {
+        position: absolute;
+        inset: 0;
+      }
+
+      /* ---- the held window (cutout, left, ~58% width) ---- */
+      .r04-window {
+        position: absolute;
+        left: 72px;
+        top: 70px;
+        width: 1100px;
+        height: 772px;
+        border-radius: 14px;
+        border: 1.5px solid rgba(84, 214, 194, 0.22);
+        overflow: hidden;
+        background: #0c2224;
+      }
+
+      /* coordinate-target-zoom: outer scales, inner translates */
+      .r04-zoom-outer {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 1100px;
+        height: 772px;
+        transform-origin: 50% 50%;
+        will-change: transform;
+      }
+      .r04-zoom-inner {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 1100px;
+        height: 772px;
+        will-change: transform;
+      }
+      .r04-shot {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 1100px;
+        height: 772px;
+        display: block;
+      }
+
+      /* keyword glow on the coral amount (raster target) */
+      .r04-glow {
+        position: absolute;
+        left: 452px;
+        top: 155px;
+        width: 170px;
+        height: 70px;
+        border-radius: 50%;
+        background: radial-gradient(ellipse at 50% 50%, rgba(255, 133, 107, 0.75) 0%, rgba(255, 133, 107, 0.28) 45%, rgba(255, 133, 107, 0) 72%);
+        mix-blend-mode: screen;
+        opacity: 0;
+        transform-origin: 50% 50%;
+      }
+      .r04-underline {
+        position: absolute;
+        left: 498px;
+        top: 195px;
+        width: 78px;
+        height: 3px;
+        border-radius: 2px;
+        background: #ff856b;
+        transform-origin: 0% 50%;
+      }
+
+      /* focus falloff: lower cards recede while the banner reads */
+      .r04-falloff {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(180deg, rgba(7, 26, 28, 0) 0%, rgba(7, 26, 28, 0) 46%, rgba(7, 26, 28, 0.62) 78%, rgba(7, 26, 28, 0.78) 100%);
+        pointer-events: none;
+      }
+
+      /* ---- right column copy (40%) ---- */
+      .r04-copy {
+        position: absolute;
+        left: 1250px;
+        top: 250px;
+        width: 600px;
+      }
+      .r04-accent {
+        width: 60px;
+        height: 4px;
+        border-radius: 2px;
+        background: #1fbf73;
+        margin-bottom: 34px;
+        transform-origin: 0% 50%;
+      }
+      .r04-headline {
+        font-weight: 700;
+        font-size: 74px;
+        line-height: 1.08;
+        letter-spacing: -0.02em;
+        color: #eaf7f4;
+        margin: 0;
+      }
+      .r04-line {
+        display: block;
+        white-space: nowrap;
+      }
+      .r04-word {
+        display: inline-block;
+        margin-right: 0.22em;
+      }
+      .r04-word-run {
+        color: #1fbf73;
+      }
+      .r04-sub {
+        margin-top: 40px;
+        font-weight: 400;
+        font-size: 38px;
+        line-height: 1.3;
+        letter-spacing: -0.01em;
+        color: #8fdccd;
+      }
+      .r04-sub-word {
+        display: inline-block;
+        margin-right: 0.24em;
+      }
+    </style>
+
+    <div class="clip r04-ground" data-start="0" data-duration="5" data-track-index="0"></div>
+
+    <div class="clip r04-stage" data-start="0" data-duration="5" data-track-index="1">
+      <div class="r04-window" id="r04-window">
+        <div class="r04-zoom-outer" id="r04-zoom-outer">
+          <div class="r04-zoom-inner" id="r04-zoom-inner" data-layout-allow-overflow>
+            <img class="r04-shot" id="r04-shot" src="assets/screen-results.png" alt="Messy results window" />
+            <div class="r04-glow" id="r04-glow"></div>
+            <div class="r04-underline" id="r04-underline"></div>
+          </div>
+        </div>
+        <div class="r04-falloff" id="r04-falloff"></div>
+      </div>
+
+      <div class="r04-copy">
+        <div class="r04-accent" id="r04-accent"></div>
+        <h2 class="r04-headline" id="r04-headline">
+          <span class="r04-line"><span class="r04-word">Nothing</span><span class="r04-word">changes</span></span>
+          <span class="r04-line"><span class="r04-word">until</span><span class="r04-word">you</span></span>
+          <span class="r04-line"><span class="r04-word">press</span><span class="r04-word r04-word-run">Run.</span></span>
+        </h2>
+        <div class="r04-sub" id="r04-sub">
+          <span class="r04-sub-word">Everything</span><span class="r04-sub-word">goes</span><span class="r04-sub-word">to</span><span class="r04-sub-word">the</span><span class="r04-sub-word">Trash</span><span class="r04-sub-word">first.</span>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <script>
+      (function () {
+        var FRAME_ID = "04-results";
+        var DURATION = 4.5;
+        var scope = document.querySelector('[data-composition-id="' + FRAME_ID + '"]') || document;
+        var q = function (sel) { return scope.querySelector(sel); };
+        var qa = function (sel) { return Array.prototype.slice.call(scope.querySelectorAll(sel)); };
+
+        var tl = gsap.timeline({ paused: true });
+
+        /* ---------- Scene 1 (0.0–1.5): window settles left, camera eases to the banner ---------- */
+        tl.fromTo(
+          "#r04-window",
+          { x: -70, scale: 0.97, opacity: 0 },
+          { x: 0, scale: 1, opacity: 1, duration: 0.7, ease: "power2.out" },
+          0
+        );
+        tl.fromTo("#r04-shot", { filter: "blur(6px)" }, { filter: "blur(0px)", duration: 0.9, ease: "power2.out" }, 0.1);
+
+        // coordinate-target-zoom (nested wrappers, T = -offset).
+        // Image geometry is fixed: shot displayed at 1100x772 (source 1960x1376, k = 0.5612).
+        // Banner sits at x 232–1081, y 132–255 (display px); coral amount center ≈ (537, 183).
+        // Target clamped so the raster still covers the window at S = 1.25:
+        // targetY >= 386 / 1.25 = 309; targetX in [440, 660].
+        var ZOOM_SCALE = 1.25;
+        var FRAME_CX = 550, FRAME_CY = 386;
+        var TARGET_X = 650, TARGET_Y = 309;
+        var OFFSET_X = TARGET_X - FRAME_CX; // 100
+        var OFFSET_Y = TARGET_Y - FRAME_CY; // -77
+        var ZOOM_AT = 0.3, ZOOM_DUR = 1.2;
+        tl.fromTo("#r04-zoom-outer", { scale: 1 }, { scale: ZOOM_SCALE, duration: ZOOM_DUR, ease: "power3.inOut" }, ZOOM_AT);
+        tl.fromTo("#r04-zoom-inner", { x: 0, y: 0 }, { x: -OFFSET_X, y: -OFFSET_Y, duration: ZOOM_DUR, ease: "power3.inOut" }, ZOOM_AT);
+        tl.fromTo("#r04-falloff", { opacity: 0 }, { opacity: 1, duration: 1.0, ease: "power2.inOut" }, 0.6);
+
+        // asr-keyword-glow: one linear driver, attack/sustain/release envelope on the coral amount
+        var GLOW = { start: 0.85, end: 1.75 };
+        var ATTACK_DUR = 0.25, RELEASE = 0.7, REST_LEVEL = 0.45, MAX_SCALE_BOOST = 0.18;
+        function envelope(time, start, end) {
+          if (time < start) return 0;
+          if (time < end) return Math.min((time - start) / ATTACK_DUR, 1);
+          var releaseEnd = end + RELEASE;
+          if (time < releaseEnd) return 1 - ((time - end) / RELEASE) * (1 - REST_LEVEL);
+          return REST_LEVEL;
+        }
+        var glowEl = q("#r04-glow");
+        var driver = { t: 0 };
+        tl.to(
+          driver,
+          {
+            t: DURATION,
+            duration: DURATION,
+            ease: "none",
+            onUpdate: function () {
+              var env = envelope(driver.t, GLOW.start, GLOW.end);
+              glowEl.style.opacity = String(env);
+              glowEl.style.transform = "scale(" + (1 + MAX_SCALE_BOOST * env) + ")";
+            },
+          },
+          0
+        );
+        tl.fromTo("#r04-underline", { scaleX: 0, opacity: 0 }, { scaleX: 1, opacity: 1, duration: 0.45, ease: "power3.out" }, 1.0);
+
+        /* ---------- Scene 2 (1.5–2.8): headline, word by word, line by line ---------- */
+        // dynamic-content-sequencing: per-word windows pre-computed once from content length,
+        // then fitted into the Scene 2 window.
+        tl.fromTo("#r04-accent", { scaleX: 0 }, { scaleX: 1, duration: 0.5, ease: "power3.out" }, 1.4);
+        var BASE_DURATION = 0.12, SEC_PER_CHAR = 0.02;
+        var S2_START = 1.5, S2_LAST_START = 2.4, WORD_DUR = 0.5;
+        var words = qa("#r04-headline .r04-word");
+        var cumulative = 0;
+        var seq = words.map(function (el) {
+          var start = cumulative;
+          cumulative += BASE_DURATION + el.textContent.length * SEC_PER_CHAR;
+          return { el: el, start: start };
+        });
+        var lastRaw = seq.length ? seq[seq.length - 1].start : 0;
+        var fit = lastRaw > 0 ? (S2_LAST_START - S2_START) / lastRaw : 0;
+        seq.forEach(function (entry) {
+          tl.fromTo(
+            entry.el,
+            { y: 34, opacity: 0, filter: "blur(8px)" },
+            { y: 0, opacity: 1, filter: "blur(0px)", duration: WORD_DUR, ease: "power3.out" },
+            S2_START + entry.start * fit
+          );
+        });
+
+        /* ---------- Scene 3 (2.8–4.5): the second promise in text-muted, then a held read ---------- */
+        var subWords = qa("#r04-sub .r04-sub-word");
+        var S3_START = 2.8, S3_STEP = 0.07;
+        subWords.forEach(function (el, i) {
+          tl.fromTo(
+            el,
+            { y: 22, opacity: 0 },
+            { y: 0, opacity: 1, duration: 0.5, ease: "power2.out" },
+            S3_START + i * S3_STEP
+          );
+        });
+        // held read 3.8–4.5: camera still, glow resting at REST_LEVEL.
+
+        window.__timelines = window.__timelines || {};
+        window.__timelines[FRAME_ID] = tl;
+      })();
+    </script>
+  </div>
+</template>
