@@ -11,3 +11,4 @@ videos/*/node_modules/
 videos/*/renders/
 videos/*/.hyperframes/artifacts/
 design/shots-v3/
+videos/*/.hyperframes/
