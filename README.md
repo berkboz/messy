@@ -6,7 +6,18 @@ A free, open-source Mac maintenance app: a one-button check up, cleaning, an uni
 
 **[Download Messy](https://github.com/berkboz/messy/releases/latest/download/Messy.dmg)** · Apple Silicon & Intel · macOS 14+ · signed and notarized · [brk.bz/messy](https://brk.bz/messy/)
 
-![The Uninstall pane with Spotify and its leftover files selected](design/shots/uninstall.png)
+<p align="center"><img src="design/screenshots/checkup.png" width="720" alt="Messy's Check up screen: the broom mascot inside a progress ring, a Let's find the mess title and a Scan button"></p>
+
+<table>
+<tr>
+<td><img src="design/screenshots/results.png" alt="Check up results: Found 86.8 MB to clean, with cards for junk, threats, maintenance, duplicates and app updates"></td>
+<td><img src="design/screenshots/monitor.png" alt="Monitor: a health score ring with its reasons, protection, storage, memory and CPU cards"></td>
+</tr>
+<tr>
+<td><img src="design/screenshots/scanning.png" alt="A Check up in progress: the broom sweeps inside the ring while modules tick off"></td>
+<td><img src="design/screenshots/speed.png" alt="Speed: maintenance tasks such as Flush DNS cache and Reset Quick Look, with checkboxes"></td>
+</tr>
+</table>
 
 | Pane | What it does |
 |---|---|

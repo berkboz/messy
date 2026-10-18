@@ -94,6 +94,11 @@ struct ContentView: View {
                     NSApp.activate(ignoringOtherApps: true)
                 }
                 AlertCenter.shared.start(stats: stats, store: store)
+                // Launch arguments for screenshots and demos, e.g. `-openPane Monitor -startCheckup YES`.
+                // They live in the volatile argument domain and are never saved.
+                let args = UserDefaults.standard
+                if args.bool(forKey: "startCheckup") { store.checkup.start() }
+                if let p = args.string(forKey: "openPane").flatMap(Pane.init(rawValue:)) { nav.pane = p }
             }
             .sheet(isPresented: Binding(get: { !onboarded }, set: { if !$0 { onboarded = true } })) {
                 OnboardingView { startWithScan in
