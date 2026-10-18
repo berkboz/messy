@@ -41,7 +41,7 @@ final class CleanModel: ObservableObject {
             DispatchQueue.main.async {
                 if ok { Sound.trash.play() }
                 self.emptying = false
-                self.message = ok ? "The Trash is empty." : "Finder could not empty the Trash. Allow Temiz to control Finder in System Settings → Privacy & Security → Automation."
+                self.message = ok ? "The Trash is empty." : "Finder could not empty the Trash. Allow Messy to control Finder in System Settings → Privacy & Security → Automation."
                 self.refreshTrash()
             }
         }
@@ -220,7 +220,7 @@ struct CleanView: View {
         .confirmationDialog("Permanently delete \(model.trashDescription)?", isPresented: $model.confirmEmpty) {
             Button("Empty Trash", role: .destructive) { model.emptyTrash() }
         } message: {
-            Text("This cannot be undone. Finder empties the Trash; Temiz itself never deletes anything.")
+            Text("This cannot be undone. Finder empties the Trash; Messy itself never deletes anything.")
         }
         .confirmationDialog("Move \(plural(model.selected.count, "item")) (\(Fmt.bytes(model.selectedSize))) to the Trash?",
                             isPresented: $model.confirm) {

@@ -34,7 +34,7 @@ final class SystemStats: ObservableObject {
     private var tickCount = 0
     private var viewers = 0
     private let sampler = ProcessSampler()
-    private let samplerQueue = DispatchQueue(label: "temiz.sampler")
+    private let samplerQueue = DispatchQueue(label: "messy.sampler")
 
     var cpuPercent: Int { Int((cpu * 100).rounded()) }
     var memPercent: Int { memTotal == 0 ? 0 : Int((Double(memUsed) / Double(memTotal) * 100).rounded()) }

@@ -13,7 +13,7 @@ angle: The broom cleans the Mac
 
 ## Intent
 
-Brand / launch film for Temiz (Turkish for "clean"), a free, open-source Mac
+Brand / launch film for Messy, a free, open-source Mac
 maintenance app by Berk Boz (brk.bz). The broom mascot enters, starts the
 Check up ring, the result cards fill in, the broom sweeps dust clouds away, and
 it ends on the logo and "Free & open source". Calm and understated like brk.bz,

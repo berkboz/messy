@@ -20,7 +20,7 @@ struct FileEntry: Identifiable, Hashable {
 struct DuplicateGroup: Identifiable {
     let id: String   // content hash
     let size: Int64  // size of one copy
-    /// The copy Temiz suggests keeping; it is never selected for removal.
+    /// The copy Messy suggests keeping; it is never selected for removal.
     let keep: URL
     let files: [URL]
     var wasted: Int64 { size * Int64(files.count - 1) }

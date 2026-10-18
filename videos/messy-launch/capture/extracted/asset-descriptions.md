@@ -1,6 +1,6 @@
 # Assets (supplied, not captured)
 
-- temiz-icon.png — 1024x1024 app icon: rounded mint-to-teal sky tile with soft clouds; a cute white broom mascot with two eyes and a smile, wooden handle, three sparkles. Use for the closing logo lockup.
+- messy-icon.png — 1024x1024 app icon: rounded mint-to-teal sky tile with soft clouds; a cute white broom mascot with two eyes and a smile, wooden handle, three sparkles. Use for the closing logo lockup.
 - mascot-idle.png — 512x512 transparent: the broom standing upright, smiling. Hero/intro.
 - mascot-sweep.png — 512x512 transparent: the broom tilted mid-sweep with dust puffs. Action beat.
 - mascot-happy.png — 512x512 transparent: the broom hopping, eyes closed happy, sparkles. Payoff / end.

@@ -1,7 +1,7 @@
 import SwiftUI
 
 @main
-struct TemizApp: App {
+struct MessyApp: App {
     @StateObject private var stats = SystemStats()
     @StateObject private var store = Store()
     @AppStorage(Prefs.showMenuBar) private var showMenuBar = true
@@ -9,7 +9,7 @@ struct TemizApp: App {
     init() { AlertPrefs.registerDefaults() }
 
     var body: some Scene {
-        WindowGroup("Temiz", id: "main") {
+        WindowGroup("Messy", id: "main") {
             ContentView(store: store, nav: store.nav, stats: stats)
                 .environmentObject(stats)
                 .environmentObject(store)
@@ -27,7 +27,7 @@ struct TemizApp: App {
                 .environmentObject(store)
                 .frame(width: 340)
                 .background(BrandBackground())
-                .temizStyle()
+                .messyStyle()
         } label: {
             Text("\(Image(systemName: "cpu")) \(stats.cpuPercent)%  \(Image(systemName: "memorychip")) \(stats.memPercent)%")
         }
@@ -114,7 +114,7 @@ struct ContentView: View {
             VStack(alignment: .leading, spacing: 2) {
                 HStack(spacing: 9) {
                     Image(nsImage: NSApp.applicationIconImage).resizable().frame(width: 30, height: 30)
-                    Text("Temiz").font(.system(size: 20, weight: .bold, design: .rounded))
+                    Text("Messy").font(.system(size: 20, weight: .bold, design: .rounded))
                 }
                 .padding(.horizontal, 8)
                 .padding(.top, 34)
@@ -138,7 +138,7 @@ struct ContentView: View {
         }
         .background(BrandBackground())
         .ignoresSafeArea(.container, edges: .top)
-        .temizStyle()
+        .messyStyle()
     }
 
     @ViewBuilder private var detail: some View {

@@ -18,7 +18,7 @@ enum AlertPrefs {
 }
 
 /// Notifications for low disk, a full Trash, sustained memory pressure, a weekly reminder and
-/// apps deleted from /Applications. Opt-in, and only while Temiz is running: there is no daemon.
+/// apps deleted from /Applications. Opt-in, and only while Messy is running: there is no daemon.
 final class AlertCenter: NSObject, UNUserNotificationCenterDelegate {
     static let shared = AlertCenter()
 
@@ -59,7 +59,7 @@ final class AlertCenter: NSObject, UNUserNotificationCenterDelegate {
         let lowDisk = Int64(defaults.integer(forKey: AlertPrefs.lowDiskGB)) * 1_000_000_000
         if s.diskTotal > 0, s.diskFree < lowDisk {
             post("lowDisk", title: "Your startup disk is getting full",
-                 body: "\(Fmt.bytes(s.diskFree)) free. Open Temiz to see what takes up space.", pane: .space)
+                 body: "\(Fmt.bytes(s.diskFree)) free. Open Messy to see what takes up space.", pane: .space)
         }
         if defaults.bool(forKey: AlertPrefs.memory) {
             // Only after five minutes of high pressure, so short spikes do not alert.
@@ -67,7 +67,7 @@ final class AlertCenter: NSObject, UNUserNotificationCenterDelegate {
                 pressureSince = pressureSince ?? Date()
                 if Date().timeIntervalSince(pressureSince!) > 300 {
                     post("memory", title: "Memory has been tight for a while",
-                         body: "Quitting an app you are not using helps most. Open Temiz to see which apps use the most.",
+                         body: "Quitting an app you are not using helps most. Open Messy to see which apps use the most.",
                          pane: .monitor)
                 }
             } else {
@@ -148,7 +148,7 @@ final class AlertCenter: NSObject, UNUserNotificationCenterDelegate {
                 for app in withLeftovers {
                     self.post("removed:" + (app.bundleID ?? app.name),
                               title: "\(app.name.displaySafe) was removed",
-                              body: "It left settings and caches behind. Open Temiz to remove them too.",
+                              body: "It left settings and caches behind. Open Messy to remove them too.",
                               pane: .apps,
                               extra: ["path": app.url.path, "name": app.name, "bundleID": app.bundleID ?? ""])
                 }

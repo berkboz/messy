@@ -1,7 +1,7 @@
 import SwiftUI
 
-// Temiz draws its own controls so nothing looks like stock macOS. Styles are applied once at the
-// root (`.temizStyle()`), so every Toggle, Button, ProgressView and TextField below picks them up.
+// Messy draws its own controls so nothing looks like stock macOS. Styles are applied once at the
+// root (`.messyStyle()`), so every Toggle, Button, ProgressView and TextField below picks them up.
 
 extension Brand {
     static let mint = Color(red: 0.33, green: 0.84, blue: 0.76)
@@ -10,7 +10,7 @@ extension Brand {
 }
 
 extension View {
-    func temizStyle() -> some View {
+    func messyStyle() -> some View {
         self
             .fontDesign(.rounded)
             .tint(Brand.teal)

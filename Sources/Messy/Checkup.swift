@@ -345,7 +345,7 @@ struct CheckupView: View {
                     Tile(icon: "arrow.down.app", title: "App updates",
                          value: model.updateCount.map { $0 == 0 ? "Up to date" : plural($0, "update") } ?? "Off",
                          caption: model.updateCount == nil ? "Turn on in Settings to include update checks." :
-                            "Apps install their own updates; Temiz only checks.",
+                            "Apps install their own updates; Messy only checks.",
                          review: { nav.pane = .apps; store.updates.showTab = true })
                         .hoverLift().appearIn(delay: 0.25)
                 }

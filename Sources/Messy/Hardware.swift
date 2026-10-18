@@ -188,7 +188,7 @@ final class NetworkStatus: ObservableObject {
                 self?.kind = path.status == .satisfied ? kind : "Offline"
             }
         }
-        monitor.start(queue: DispatchQueue(label: "temiz.network"))
+        monitor.start(queue: DispatchQueue(label: "messy.network"))
     }
 
     deinit { monitor.cancel() }

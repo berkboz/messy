@@ -2,9 +2,9 @@
 import PackageDescription
 
 let package = Package(
-    name: "Temiz",
+    name: "Messy",
     platforms: [.macOS(.v14)],
     targets: [
-        .executableTarget(name: "Temiz", path: "Sources/Temiz")
+        .executableTarget(name: "Messy", path: "Sources/Messy")
     ]
 )

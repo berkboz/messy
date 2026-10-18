@@ -28,7 +28,7 @@ keyMessage: clutter builds up quietly.
 
 Lines land one by one, left-aligned, generous size. The last line dims slightly; the worried broom peeks in from the right edge at the end.
 
-## Frame 2 — Meet Temiz
+## Frame 2 — Meet Messy
 
 - scene: The broom hops into the centre, sparkles pop; the wordmark and one-line promise appear beside it
 - voiceover: ""
@@ -40,8 +40,8 @@ Lines land one by one, left-aligned, generous size. The last line dims slightly;
 - persuasion: Friendly reveal
 - beat: curiosity → delight
 - blueprint: titlecard-reveal
-- asset_candidates: assets/mascot-happy.png — the broom hopping with sparkles; assets/temiz-icon.png — app icon, mint sky tile
-- on_screen: "Temiz" / "A free, open-source Mac cleaner."
+- asset_candidates: assets/mascot-happy.png — the broom hopping with sparkles; assets/messy-icon.png — app icon, mint sky tile
+- on_screen: "Messy" / "A free, open-source Mac cleaner."
 
 narrativeRole: name the product and state the value in one breath.
 keyMessage: there is a free, friendly cleaner for this.
@@ -112,8 +112,8 @@ keyMessage: it does what the big cleaners do, quietly.
 - persuasion: Inevitability
 - beat: satisfaction
 - blueprint: logo-assemble-lockup
-- asset_candidates: assets/mascot-sweep.png — the broom tilted mid-sweep with dust puffs; assets/temiz-icon.png — app icon
-- on_screen: "Temiz" / "Free & open source" / "brk.bz/temiz"
+- asset_candidates: assets/mascot-sweep.png — the broom tilted mid-sweep with dust puffs; assets/messy-icon.png — app icon
+- on_screen: "Messy" / "Free & open source" / "brk.bz/messy"
 
 narrativeRole: land the brand and where to get it.
-keyMessage: free, open source, brk.bz/temiz.
+keyMessage: free, open source, brk.bz/messy.

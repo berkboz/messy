@@ -200,7 +200,7 @@ struct SpeedView: View {
                             }
                             Text(t.detail).font(.caption).foregroundStyle(.secondary)
                                 .fixedSize(horizontal: false, vertical: true)
-                            Text(model.lastRun(t).map { "Last run \($0.formatted(.relative(presentation: .named)))" } ?? "Not run with Temiz yet")
+                            Text(model.lastRun(t).map { "Last run \($0.formatted(.relative(presentation: .named)))" } ?? "Not run with Messy yet")
                                 .font(.caption2).foregroundStyle(.tertiary)
                         }
                     }

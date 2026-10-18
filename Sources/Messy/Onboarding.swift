@@ -94,7 +94,7 @@ struct OnboardingView: View {
         }
         .frame(width: 620, height: 540)
         .background(BrandBackground())
-        .temizStyle()
+        .messyStyle()
         .onReceive(NotificationCenter.default.publisher(for: NSApplication.didBecomeActiveNotification)) { _ in
             state.refreshFDA()
         }
@@ -103,7 +103,7 @@ struct OnboardingView: View {
     private var welcome: some View {
         VStack(spacing: 18) {
             Mascot(pose: .happy, size: 120, motion: .bob)
-            Text("Welcome to Temiz").font(.largeTitle.bold())
+            Text("Welcome to Messy").font(.largeTitle.bold())
             Text("A free, open-source maintenance tool for your Mac: cleaning, uninstalling apps, disk analysis, a system monitor and a security check in one window.")
                 .multilineTextAlignment(.center)
                 .foregroundStyle(.secondary)
@@ -149,10 +149,10 @@ struct OnboardingView: View {
                         Button("Open Settings") { FullDiskAccess.openSettings() }
                     }
                 }
-                Text("Optional. With it, Temiz can also scan places like Mail attachments and other apps' protected folders. Without it, those places are skipped; everything else works.")
+                Text("Optional. With it, Messy can also scan places like Mail attachments and other apps' protected folders. Without it, those places are skipped; everything else works.")
                     .font(.callout).foregroundStyle(.secondary).fixedSize(horizontal: false, vertical: true)
                 if !state.fdaGranted {
-                    Text("Add Temiz to the list in System Settings, turn the switch on, then come back here.")
+                    Text("Add Messy to the list in System Settings, turn the switch on, then come back here.")
                         .font(.caption).foregroundStyle(.tertiary)
                 }
             }
@@ -161,7 +161,7 @@ struct OnboardingView: View {
 
             VStack(alignment: .leading, spacing: 10) {
                 Toggle("Show CPU and RAM in the menu bar", isOn: $showMenuBar)
-                Toggle("Open Temiz at login", isOn: Binding(get: { state.loginItem },
+                Toggle("Open Messy at login", isOn: Binding(get: { state.loginItem },
                                                                     set: { state.toggleLogin($0) }))
                 if let e = state.loginError {
                     Text(e).font(.caption).foregroundStyle(.red)
@@ -229,20 +229,20 @@ struct SettingsView: View {
                     Mascot(pose: .idle, size: 54, motion: .bob)
                     VStack(alignment: .leading, spacing: 2) {
                         Text("Settings").font(.title2.bold())
-                        Text("Temiz \(version)").font(.caption).foregroundStyle(.secondary)
+                        Text("Messy \(version)").font(.caption).foregroundStyle(.secondary)
                     }
                 }
                 group("General") {
                     Toggle("Show CPU and RAM in the menu bar", isOn: $showMenuBar).toggleStyle(PillSwitchStyle())
                     Toggle("Sound effects", isOn: $soundEffects).toggleStyle(PillSwitchStyle())
-                    Toggle("Open Temiz at login", isOn: Binding(get: { state.loginItem }, set: { state.toggleLogin($0) }))
+                    Toggle("Open Messy at login", isOn: Binding(get: { state.loginItem }, set: { state.toggleLogin($0) }))
                         .toggleStyle(PillSwitchStyle())
                     if let e = state.loginError { Text(e).font(.caption).foregroundStyle(.red) }
                 }
                 group("Check up", note: "Checking asks each app's update server for its latest version, so those servers see your IP address. Off by default; Apps → Updates always checks on demand.") {
                     Toggle("Include an update check", isOn: $checkupUpdates).toggleStyle(PillSwitchStyle())
                 }
-                group("Alerts", note: "Alerts only arrive while Temiz is running; there is no background service. Turn on Open Temiz at login to keep them working. The Trash alert needs Full Disk Access.") {
+                group("Alerts", note: "Alerts only arrive while Messy is running; there is no background service. Turn on Open Messy at login to keep them working. The Trash alert needs Full Disk Access.") {
                     Toggle("Show alerts", isOn: Binding(get: { alerts }, set: { on in
                         if on {
                             AlertCenter.shared.requestPermission { ok in alerts = ok; AlertCenter.shared.updateWeekly() }
@@ -277,7 +277,7 @@ struct SettingsView: View {
                 }
                 group("About") {
                     HStack {
-                        Link("Source code on GitHub", destination: URL(string: "https://github.com/berkboz/temiz")!)
+                        Link("Source code on GitHub", destination: URL(string: "https://github.com/berkboz/messy")!)
                             .foregroundStyle(Brand.teal)
                         Spacer()
                         Button("Show welcome screen again") { onboarded = false }
@@ -288,7 +288,7 @@ struct SettingsView: View {
         }
         .frame(width: 500, height: 640)
         .background(BrandBackground())
-        .temizStyle()
+        .messyStyle()
         .onReceive(NotificationCenter.default.publisher(for: NSApplication.didBecomeActiveNotification)) { _ in
             state.refreshFDA()
         }

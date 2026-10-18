@@ -205,7 +205,7 @@ struct Mascot: View {
 }
 
 /// The mascot as a Core Animation layer. Its looping motion runs in the system's render server,
-/// so an idle screen costs Temiz no CPU (SwiftUI's repeating animations redraw every frame).
+/// so an idle screen costs Messy no CPU (SwiftUI's repeating animations redraw every frame).
 private struct MascotLayer: NSViewRepresentable {
     let image: CGImage
     let motion: Mascot.Motion

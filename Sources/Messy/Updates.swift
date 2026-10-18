@@ -91,7 +91,7 @@ final class CappedFetcher: NSObject, URLSessionDataDelegate {
     }
 
     /// Public https hosts only: no IP literals, localhost or .local names, so an app's feed URL
-    /// cannot make Temiz probe the local network.
+    /// cannot make Messy probe the local network.
     static func allowed(_ url: URL) -> Bool {
         guard url.scheme == "https", let host = url.host?.lowercased(), !host.isEmpty else { return false }
         if host == "localhost" || host.hasSuffix(".local") || host.hasSuffix(".localhost") || host.contains(":") { return false }

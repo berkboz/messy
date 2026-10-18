@@ -73,7 +73,7 @@ enum FS {
         (try? FileManager.default.contentsOfDirectory(at: url, includingPropertiesForKeys: nil, options: [])) ?? []
     }
 
-    /// Moves items to the Trash. Temiz never deletes anything permanently.
+    /// Moves items to the Trash. Messy never deletes anything permanently.
     static func trash(_ urls: [URL]) -> [(URL, String)] {
         var failed: [(URL, String)] = []
         for u in urls {
@@ -95,7 +95,7 @@ enum FS {
     }
 
     /// Reads a small, untrusted file. Symlinks are followed (dotfile managers use them), but only
-    /// regular files up to `limit` are read, so a FIFO or /dev/zero cannot hang or exhaust Temiz.
+    /// regular files up to `limit` are read, so a FIFO or /dev/zero cannot hang or exhaust Messy.
     static func readCapped(_ url: URL, limit: Int = 1_000_000) -> Data? {
         let real = url.resolvingSymlinksInPath()
         guard let v = try? real.resourceValues(forKeys: [.isRegularFileKey, .fileSizeKey]),
@@ -121,7 +121,7 @@ enum FS {
         return (visible.reduce(0) { $0 + size(of: $1) }, visible.count)
     }
 
-    /// The only permanent deletion in Temiz: Finder empties the Trash, after the user confirms.
+    /// The only permanent deletion in Messy: Finder empties the Trash, after the user confirms.
     static func emptyTrash() -> Bool {
         Shell.run("/usr/bin/osascript", ["-e", "tell application \"Finder\" to empty trash"], timeout: 600).status == 0
     }
@@ -298,7 +298,7 @@ struct CommandBox: View {
                 Text("Paste into Terminal and run; it will ask for your admin password.")
                     .font(.caption).foregroundStyle(.secondary)
             } else {
-                Text("The name contains hidden characters, so Temiz will not build a command for it. Use “Show in Finder” and remove it there.")
+                Text("The name contains hidden characters, so Messy will not build a command for it. Use “Show in Finder” and remove it there.")
                     .font(.caption).foregroundStyle(.secondary)
             }
         }

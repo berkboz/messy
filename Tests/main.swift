@@ -7,7 +7,7 @@ func check(_ ok: Bool, _ what: String) {
 }
 
 let fm = FileManager.default
-let root = fm.temporaryDirectory.appendingPathComponent("temiz-tests-\(UUID().uuidString)")
+let root = fm.temporaryDirectory.appendingPathComponent("messy-tests-\(UUID().uuidString)")
 try! fm.createDirectory(at: root, withIntermediateDirectories: true)
 defer { try? fm.removeItem(at: root) }
 

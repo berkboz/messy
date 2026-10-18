@@ -1,4 +1,4 @@
-// Synthesizes Temiz's sound effects as 44.1 kHz mono WAV files.
+// Synthesizes Messy's sound effects as 44.1 kHz mono WAV files.
 //   swiftc -O make-sfx.swift -o make-sfx && ./make-sfx ../../Resources/Sounds
 import Foundation
 

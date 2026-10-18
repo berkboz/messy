@@ -64,7 +64,7 @@ private struct DashboardContent: View {
             if compact {
                 Divider()
                 HStack {
-                    Button("Open Temiz", action: openMain)
+                    Button("Open Messy", action: openMain)
                     Spacer()
                     Button("Quit") { NSApp.terminate(nil) }
                 }
@@ -189,7 +189,7 @@ private struct DashboardContent: View {
                 InfoRow(label: "Risky items", value: "\(security.riskyCount)")
                 InfoRow(label: "Items to review", value: "\(security.reviewCount)")
             } else {
-                Text("Temiz checks background services, app signatures and system protections when you ask.")
+                Text("Messy checks background services, app signatures and system protections when you ask.")
                     .font(.caption).foregroundStyle(.secondary).fixedSize(horizontal: false, vertical: true)
             }
             Button(security.scanned ? "Open Protect" : "Check now") {

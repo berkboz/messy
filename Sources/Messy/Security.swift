@@ -327,7 +327,7 @@ final class SecurityModel: ObservableObject {
         let list = AppScanner.apps()
         var out: [AppSig] = []
         let lock = NSLock()
-        // Trust Temiz by location, not bundle ID: any app can claim com.berk.temiz.
+        // Trust Messy by location, not bundle ID: any app can claim com.berk.messy.
         let me = Bundle.main.bundleURL.standardizedFileURL
         DispatchQueue.concurrentPerform(iterations: list.count) { i in
             let a = list[i]

@@ -3,15 +3,15 @@
 <plist version="1.0">
 <dict>
 	<key>CFBundleDisplayName</key>
-	<string>Temiz</string>
+	<string>Messy</string>
 	<key>CFBundleExecutable</key>
-	<string>Temiz</string>
+	<string>Messy</string>
 	<key>CFBundleIconFile</key>
 	<string>AppIcon</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.berk.temiz</string>
+	<string>com.berk.messy</string>
 	<key>CFBundleName</key>
-	<string>Temiz</string>
+	<string>Messy</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
@@ -23,13 +23,13 @@
 	<key>LSMinimumSystemVersion</key>
 	<string>14.0</string>
 	<key>NSAppleEventsUsageDescription</key>
-	<string>Temiz asks Finder to empty the Trash, only when you click Empty Trash and confirm.</string>
+	<string>Messy asks Finder to empty the Trash, only when you click Empty Trash and confirm.</string>
 	<key>NSDesktopFolderUsageDescription</key>
-	<string>Temiz needs access to calculate the size of your Desktop folder for disk analysis.</string>
+	<string>Messy needs access to calculate the size of your Desktop folder for disk analysis.</string>
 	<key>NSDocumentsFolderUsageDescription</key>
-	<string>Temiz needs access to calculate the size of your Documents folder for disk analysis.</string>
+	<string>Messy needs access to calculate the size of your Documents folder for disk analysis.</string>
 	<key>NSDownloadsFolderUsageDescription</key>
-	<string>Temiz needs access to show old installers in Downloads and their sizes.</string>
+	<string>Messy needs access to show old installers in Downloads and their sizes.</string>
 	<key>NSHighResolutionCapable</key>
 	<true/>
 	<key>NSHumanReadableCopyright</key>

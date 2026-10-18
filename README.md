@@ -1,10 +1,10 @@
 <p align="center"><img src="design/icon-clean.png" width="128" alt=""></p>
 
-# Temiz
+# Messy
 
-A free, open-source Mac maintenance app: a one-button check up, cleaning, an uninstaller and update checker, duplicate and large-file finder, a disk map, a system monitor in the menu bar, and a check for cracked apps and suspicious background services. *Temiz* is Turkish for clean.
+A free, open-source Mac maintenance app: a one-button check up, cleaning, an uninstaller and update checker, duplicate and large-file finder, a disk map, a system monitor in the menu bar, and a check for cracked apps and suspicious background services. Messy finds the mess so you don't have to.
 
-**[Download Temiz](https://github.com/berkboz/temiz/releases/latest/download/Temiz.dmg)** · Apple Silicon & Intel · macOS 14+ · signed and notarized · [brk.bz/temiz](https://brk.bz/temiz/)
+**[Download Messy](https://github.com/berkboz/messy/releases/latest/download/Messy.dmg)** · Apple Silicon & Intel · macOS 14+ · signed and notarized · [brk.bz/messy](https://brk.bz/messy/)
 
 ![The Uninstall pane with Spotify and its leftover files selected](design/shots/uninstall.png)
 
@@ -23,7 +23,7 @@ Optional alerts: low disk, a full Trash, memory tight for five minutes, a weekly
 
 ## Principles
 
-- **Nothing is deleted by Temiz itself.** Everything goes to the Trash. *Empty Trash* asks Finder to empty it, after you confirm.
+- **Nothing is deleted by Messy itself.** Everything goes to the Trash. *Empty Trash* asks Finder to empty it, after you confirm.
 - **No privileged helper.** No daemon and no root component. Admin tasks run fixed, built-in commands behind the macOS password dialog; anything else that needs admin rights is shown as a quoted command you can read and run yourself.
 - **No network unless you click.** No account, telemetry or analytics. Checking for updates asks each app's own update server (it sees your IP address), and the speed test uses Apple's `networkQuality`; both only run when you ask. Signature checks may let macOS confirm notarization tickets with Apple.
 - **Honest about limits.** No signature-based antivirus (macOS XProtect does that), and no chip temperatures, fan speeds or hung-app detection, which need private macOS interfaces.
@@ -33,8 +33,8 @@ Optional alerts: low disk, a full Trash, memory tight for five minutes, a weekly
 Needs only the Xcode Command Line Tools.
 
 ```bash
-./build.sh          # build/Temiz.app, universal, signed with your Developer ID if you have one
-open build/Temiz.app
+./build.sh          # build/Messy.app, universal, signed with your Developer ID if you have one
+open build/Messy.app
 ```
 
 `SIGN_IDENTITY="" ./build.sh` makes an ad-hoc signed build, `./test.sh` runs the checks in `Tests/`, and `./release.sh` builds a notarized DMG; it needs a notarytool keychain profile (see the comment at the top of the script).

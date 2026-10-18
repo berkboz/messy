@@ -5,7 +5,7 @@ import Foundation
 
 let rate = 44_100.0
 let args = CommandLine.arguments
-let outPath = args.count > 1 ? args[1] : "temiz-bed.wav"
+let outPath = args.count > 1 ? args[1] : "messy-bed.wav"
 let length = args.count > 2 ? Double(args[2])! : 26
 let beat = 60.0 / 92
 let bar = beat * 4

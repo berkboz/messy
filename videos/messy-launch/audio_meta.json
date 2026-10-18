@@ -1,5 +1,5 @@
 {
-  "bgm": { "path": "assets/music/temiz-bed.wav", "volume": 0.5, "source": "host" },
+  "bgm": { "path": "assets/music/messy-bed.wav", "volume": 0.5, "source": "host" },
   "bgm_pending": false,
   "voices": [],
   "sfx": [
