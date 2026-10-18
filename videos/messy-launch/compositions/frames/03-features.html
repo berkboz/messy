@@ -1,0 +1,176 @@
+<template>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+  <style>
+    @font-face { font-family: "MessySans"; src: url("assets/fonts/inter-latin-wght-normal.woff2") format("woff2"); font-weight: 100 900;
+      unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+    @font-face { font-family: "MessySans"; src: url("assets/fonts/inter-latin-ext-wght-normal.woff2") format("woff2"); font-weight: 100 900;
+      unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF; }
+    #root { position: absolute; inset: 0; width: 1920px; height: 1080px; overflow: hidden; font-family: "MessySans", sans-serif; font-feature-settings: "cv11", "ss03"; color: #f3f6f5; }
+    #ft-bg { position: absolute; inset: 0; background: radial-gradient(ellipse 60% 50% at 50% 56%, #0f1d1c 0%, #070d0c 70%); }
+    #ft-stage { position: absolute; inset: 0; }
+    #ft-head { position: absolute; left: 0; width: 1920px; top: 150px; text-align: center; font-weight: 600; font-size: 64px; letter-spacing: -0.03em; color: rgba(243,246,245,0.5); }
+    #ft-strip { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; }
+    .ft-panel { position: absolute; top: 300px; width: 780px; height: 470px; border-radius: 36px; background: #111b1a; border: 1.5px solid rgba(255,255,255,0.07); overflow: hidden; }
+    .ft-cap { position: absolute; top: 810px; width: 1000px; text-align: center; font-weight: 600; font-size: 52px; letter-spacing: -0.03em; white-space: nowrap; }
+    .ft-k { position: absolute; left: 50px; top: 44px; font-size: 26px; font-weight: 600; color: rgba(243,246,245,0.75); }
+    .ft-big { position: absolute; left: 50px; top: 96px; font-size: 120px; font-weight: 600; letter-spacing: -0.045em; font-variant-numeric: tabular-nums; }
+    .ft-sub { position: absolute; left: 50px; top: 252px; font-size: 24px; color: rgba(243,246,245,0.5); font-variant-numeric: tabular-nums; }
+    .ft-bar { position: absolute; left: 50px; right: 50px; top: 310px; height: 18px; border-radius: 9px; background: rgba(255,255,255,0.07); overflow: hidden; }
+    .ft-bar i { position: absolute; left: 0; top: 0; bottom: 0; width: 100%; border-radius: 9px; display: block; }
+    .ft-btn { position: absolute; left: 50px; top: 372px; height: 56px; padding: 0 28px; border-radius: 28px; background: rgba(61,203,142,0.16); border: 1.5px solid rgba(61,203,142,0.45);
+      display: flex; align-items: center; font-size: 22px; font-weight: 600; color: #7be8bd; }
+    .ft-row { position: absolute; left: 50px; right: 50px; height: 92px; display: flex; align-items: center; gap: 22px; border-bottom: 1px solid rgba(255,255,255,0.06); font-size: 28px; font-weight: 500; }
+    .ft-row .ic { width: 52px; height: 52px; border-radius: 13px; }
+    .ft-row .nm { flex: 1; }
+    .ft-sw { width: 78px; height: 44px; border-radius: 22px; background: #3dcb8e; position: relative; }
+    .ft-sw b { position: absolute; left: 38px; top: 4px; width: 36px; height: 36px; border-radius: 50%; background: #fff; display: block; }
+    .ft-chip { position: absolute; height: 52px; padding: 0 22px; border-radius: 26px; background: rgba(255,122,92,0.12); border: 1.5px solid rgba(255,122,92,0.4); color: #ffb3a1;
+      display: flex; align-items: center; font-size: 22px; font-weight: 500; white-space: nowrap; }
+    .ft-blk { position: absolute; border-radius: 14px; }
+    .ft-blk span { position: absolute; left: 18px; top: 14px; font-size: 22px; font-weight: 600; color: rgba(5,20,15,0.8); }
+  </style>
+
+  <div id="root" data-composition-id="03-features" data-width="1920" data-height="1080" data-duration="7">
+    <div id="ft-bg" class="clip" data-start="0" data-duration="7" data-track-index="0"></div>
+    <div id="ft-stage" class="clip" data-start="0" data-duration="7" data-track-index="1" data-layout-allow-overflow>
+      <div id="ft-head"></div>
+      <div id="ft-strip" data-layout-allow-overflow>
+        <!-- 1 · memory -->
+        <div class="ft-panel" id="ft-p0" style="left:570px">
+          <div class="ft-k">Memory</div>
+          <div class="ft-big" id="ft-mem">84%</div>
+          <div class="ft-sub" id="ft-memsub">14,4 GB of 17,2 GB used</div>
+          <div class="ft-bar"><i id="ft-membar" style="background:linear-gradient(90deg,#ff9a7f,#ff7a5c)"></i></div>
+          <div class="ft-btn" id="ft-free">Free up RAM</div>
+        </div>
+        <div class="ft-cap" id="ft-c0" style="left:460px"></div>
+
+        <!-- 2 · uninstall -->
+        <div class="ft-panel" id="ft-p1" style="left:1570px">
+          <div id="ft-appgrp" style="position:absolute; left:0; top:0; width:780px; height:470px">
+            <div id="ft-app" style="position:absolute; left:100px; top:165px; width:140px; height:140px; border-radius:34px; background:linear-gradient(160deg,#9b8cff,#6c5ce0); box-shadow:0 18px 40px rgba(0,0,0,0.45)"></div>
+            <div class="ft-chip" id="ft-lo0" style="left:340px; top:80px">~/Library/Preferences</div>
+            <div class="ft-chip" id="ft-lo1" style="left:340px; top:160px">~/Library/Caches</div>
+            <div class="ft-chip" id="ft-lo2" style="left:340px; top:240px">~/Library/Containers</div>
+            <div class="ft-chip" id="ft-lo3" style="left:340px; top:320px">LaunchAgents</div>
+          </div>
+          <svg id="ft-bin" style="position:absolute; left:620px; top:330px" width="84" height="84" viewBox="0 0 84 84"><path d="M18 22 H66 L61 76 Q60.5 80 56.5 80 H27.5 Q23.5 80 23 76 Z" fill="rgba(255,255,255,0.12)" stroke="rgba(255,255,255,0.5)" stroke-width="2.5" stroke-linejoin="round"/><rect x="14" y="17" width="56" height="6" rx="3" fill="rgba(255,255,255,0.55)"/></svg>
+        </div>
+        <div class="ft-cap" id="ft-c1" style="left:1460px"></div>
+
+        <!-- 3 · login items -->
+        <div class="ft-panel" id="ft-p2" style="left:2570px">
+          <div class="ft-k">Open at login</div>
+          <div class="ft-row" style="top:100px"><div class="ic" style="background:linear-gradient(160deg,#6aa9ff,#3b6fe0)"></div><div class="nm">Updater Agent</div><div class="ft-sw" id="ft-sw0"><b id="ft-kn0"></b></div></div>
+          <div class="ft-row" style="top:192px"><div class="ic" style="background:linear-gradient(160deg,#ffd36a,#f2a33a)"></div><div class="nm">Sync Helper</div><div class="ft-sw" id="ft-sw1"><b id="ft-kn1"></b></div></div>
+          <div class="ft-row" style="top:284px"><div class="ic" style="background:linear-gradient(160deg,#ff8fa3,#e0566f)"></div><div class="nm">Cloud Service</div><div class="ft-sw" id="ft-sw2"><b id="ft-kn2"></b></div></div>
+        </div>
+        <div class="ft-cap" id="ft-c2" style="left:2460px"></div>
+
+        <!-- 4 · space -->
+        <div class="ft-panel" id="ft-p3" style="left:3570px">
+          <div class="ft-blk" id="ft-b0" style="left:30px; top:30px; width:420px; height:410px; background:#ff7a5c"><span>Xcode · 18,2 GB</span></div>
+          <div class="ft-blk" id="ft-b1" style="left:462px; top:30px; width:288px; height:200px; background:#54d6c2"><span>Photos</span></div>
+          <div class="ft-blk" id="ft-b2" style="left:462px; top:242px; width:140px; height:198px; background:#3dcb8e"></div>
+          <div class="ft-blk" id="ft-b3" style="left:614px; top:242px; width:136px; height:96px; background:#7be8bd"></div>
+          <div class="ft-blk" id="ft-b4" style="left:614px; top:350px; width:136px; height:90px; background:#a9b4b2"></div>
+        </div>
+        <div class="ft-cap" id="ft-c3" style="left:3460px"></div>
+
+        <!-- 5 · protect -->
+        <div class="ft-panel" id="ft-p4" style="left:4570px">
+          <svg style="position:absolute; left:300px; top:70px" width="180" height="220" viewBox="0 0 180 220">
+            <path d="M90 8 L166 36 V102 C166 156 134 194 90 212 C46 194 14 156 14 102 V36 Z" fill="rgba(61,203,142,0.08)" stroke="#5fd3a5" stroke-width="7" stroke-linejoin="round"/>
+            <path id="ft-check" d="M56 110 L80 134 L126 84" fill="none" stroke="#5fd3a5" stroke-width="11" stroke-linecap="round" stroke-linejoin="round" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/>
+          </svg>
+          <div id="ft-scanline" style="position:absolute; left:250px; width:280px; top:70px; height:4px; border-radius:2px; background:#7be8bd; box-shadow:0 0 22px #7be8bd"></div>
+          <div id="ft-ok" style="position:absolute; left:0; width:780px; top:330px; text-align:center; font-size:30px; font-weight:600">No threats found</div>
+          <div style="position:absolute; left:0; width:780px; top:378px; text-align:center; font-size:21px; color:rgba(243,246,245,0.5)">Background items · app signatures · login hooks</div>
+        </div>
+        <div class="ft-cap" id="ft-c4" style="left:4460px"></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      const DURATION = 7;
+      const tl = gsap.timeline({ paused: true });
+      const $ = (id) => document.getElementById(id);
+      const EO = (p) => (p >= 1 ? 1 : 1 - Math.pow(2, -10 * p));
+      const EI = (p) => (p <= 0 ? 0 : Math.pow(2, 10 * (p - 1)));
+      const EIO = (p) => (p < 0.5 ? EI(2 * p) / 2 : 0.5 + EO(2 * p - 1) / 2);
+      const LANG = (() => { try { const v = window.__hyperframes && window.__hyperframes.getVariables && window.__hyperframes.getVariables(); return (v && v.lang) || "en"; } catch (e) { return "en"; } })();
+      const T = (en, tr) => (LANG === "tr" ? tr : en);
+
+      $("ft-head").textContent = T("And the rest of the job.", "Ve işin geri kalanı.");
+      const caps = [
+        T("Free up memory.", "Belleği boşalt."),
+        T("Remove apps, leftovers and all.", "Uygulamaları artıklarıyla kaldır."),
+        T("Choose what opens at login.", "Açılışta ne açılacağını seç."),
+        T("See what takes the space.", "Yeri neyin kapladığını gör."),
+        T("Check where malware hides.", "Zararlıların saklandığı yerlere bak."),
+      ];
+      caps.forEach((c, i) => ($("ft-c" + i).textContent = c));
+
+      // One continuous camera pan: enters already moving left (frame 02 left that way), stops on each panel.
+      const strip = $("ft-strip");
+      gsap.set(strip, { x: 1100 });
+      tl.to(strip, { x: 0, duration: 0.7, ease: EO }, 0);
+      tl.fromTo("#ft-head", { x: 500, opacity: 0, filter: "blur(10px)" }, { x: 0, opacity: 1, filter: "blur(0px)", duration: 0.8, ease: EO }, 0.05);
+      const STOP = [0, 1.3, 2.6, 3.9, 5.2];
+      for (let i = 1; i < 5; i++) tl.to(strip, { x: -1000 * i, filter: "blur(0px)", duration: 0.6, ease: EIO }, STOP[i] - 0.25);
+      // caption under each panel lands as it arrives
+      STOP.forEach((t, i) => {
+        tl.fromTo("#ft-c" + i, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.6, ease: EO }, t + 0.15);
+        if (i < 4) tl.to("#ft-c" + i, { opacity: 0, duration: 0.25, ease: EI }, STOP[i + 1] - 0.3);
+      });
+      // exit, accelerating left into frame 04
+      tl.to(strip, { x: -5000 - 900, filter: "blur(10px)", duration: 0.55, ease: EI }, 6.45);
+      tl.to("#ft-head", { x: -500, opacity: 0, filter: "blur(10px)", duration: 0.5, ease: EI }, 6.5);
+
+      // 1 · memory frees up.
+      const mem = { v: 84 };
+      gsap.set("#ft-membar", { scaleX: 0.84, transformOrigin: "0% 50%" });
+      tl.to("#ft-free", { scale: 0.94, duration: 0.07, ease: EI }, 0.55);
+      tl.to("#ft-free", { scale: 1, duration: 0.4, ease: EO }, 0.62);
+      tl.to(mem, { v: 52, duration: 0.9, ease: EO, onUpdate: () => {
+        $("ft-mem").textContent = Math.round(mem.v) + "%";
+        $("ft-memsub").textContent = (17.2 * mem.v / 100).toFixed(1).replace(".", ",") + " GB of 17,2 GB used";
+      } }, 0.65);
+      tl.to("#ft-membar", { scaleX: 0.52, duration: 0.9, ease: EO }, 0.65);
+      tl.to("#ft-membar", { background: "linear-gradient(90deg,#7be8bd,#3dcb8e)", duration: 0.5, ease: EO }, 0.8);
+
+      // 2 · the app and everything it left behind go together.
+      const U = STOP[1] + 0.4;
+      [0, 1, 2, 3].forEach((k) => tl.to("#ft-lo" + k, { x: -220, y: 165 + 25 - [80, 160, 240, 320][k] , scale: 0.2, opacity: 0, duration: 0.45, ease: EI }, U + k * 0.06));
+      tl.to("#ft-app", { scale: 1.08, duration: 0.15, ease: EO }, U + 0.45);
+      tl.to("#ft-app", { x: 520, y: 180, scale: 0.18, rotation: 20, duration: 0.45, ease: EI }, U + 0.62);
+      tl.to("#ft-bin", { y: -8, duration: 0.08, ease: EO }, U + 1.06);
+      tl.to("#ft-bin", { y: 0, duration: 0.4, ease: EO }, U + 1.14);
+
+      // 3 · login items switch off, one per beat.
+      [0, 1, 2].forEach((k) => {
+        const t = STOP[2] + 0.2 + k * 0.25;
+        tl.to("#ft-kn" + k, { x: -34, duration: 0.3, ease: EO }, t);
+        tl.to("#ft-sw" + k, { background: "rgba(255,255,255,0.16)", duration: 0.3, ease: EO }, t);
+      });
+
+      // 4 · the space map assembles and the biggest block comes forward.
+      [0, 1, 2, 3, 4].forEach((k) => tl.fromTo("#ft-b" + k, { scale: 0.4, opacity: 0, transformOrigin: "50% 50%" }, { scale: 1, opacity: 1, duration: 0.55, ease: EO }, STOP[3] - 0.35 + k * 0.05));
+      tl.to(["#ft-b1", "#ft-b2", "#ft-b3", "#ft-b4"], { opacity: 0.35, duration: 0.4, ease: EO }, STOP[3] + 0.45);
+      tl.to("#ft-b0", { scale: 1.03, duration: 0.5, ease: EO }, STOP[3] + 0.45);
+
+      // 5 · a scan passes over the shield, then the check draws.
+      tl.fromTo("#ft-scanline", { y: 0, opacity: 0 }, { y: 0, opacity: 1, duration: 0.1 }, STOP[4] - 0.1);
+      tl.to("#ft-scanline", { y: 210, duration: 0.7, ease: EIO }, STOP[4] - 0.1);
+      tl.to("#ft-scanline", { opacity: 0, duration: 0.15 }, STOP[4] + 0.6);
+      tl.to("#ft-check", { strokeDashoffset: 0, duration: 0.4, ease: EO }, STOP[4] + 0.55);
+      tl.fromTo("#ft-ok", { opacity: 0.2 }, { opacity: 1, duration: 0.4, ease: EO }, STOP[4] + 0.6);
+
+      tl.set({}, {}, DURATION);
+      window.__timelines = window.__timelines || {};
+      window.__timelines["03-features"] = tl;
+    })();
+  </script>
+</template>

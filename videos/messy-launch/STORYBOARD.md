@@ -1,116 +1,64 @@
 ---
 format: 1920x1080
-duration: 32s
-message: "A free, open-source Mac cleaner that asks for nothing: Messy finds the mess, a little broom sweeps it up, and nothing changes until you press Run"
-arc: Mess → Tension (the asks) → One-cut resolution (the sweep) → Demo → Proof → Breadth → Trust slams → One line, then the lockup
+duration: 34s
+message: "A free, open-source Mac cleaner that doesn't add to the mess: one click finds it, nothing changes until you press Run, and everything goes to the Trash first"
+arc: Problem (the disk fills, cleaners add more) → Turn (Meet messy) → Demo as one continuous shape → Breadth on one pan → Three promises → Poster
 audience: Mac users who read brk.bz; developers and people who use a cleaner a few times a year
 mode: autonomous
 music: host
+languages: en, tr (render with --variables '{"lang":"tr"}')
 ---
 
-## Video direction
+## Video direction (v3)
 
-Rebuilt in October 2026 after studying the references saved in Raindrop (Launch Video and Video Agent → Inspiration): Titouan Gillet's breakdowns (Cofounder, Cloudflare, Firecrawl, Motionly), Ondo, State Machines, wabi, Kevin Ngo's procedural riso film, Koldo Huici's infinite zoom, 2irl4u's rebuilt UI, Kyle Anthony's editorial motion, dhruvxr's macro UI cuts, isaac.edits on SFX, and N01ennn's "Opus 5.5 into a studio" guide.
+Rebuilt after reading every guide saved in Raindrop (Launch Video, Video Agent and its Inspiration folder), not just the launch films. What each one decided here:
 
-What we take, and where:
+- **leomeethewoo, "Apple Framework":** intention over effects; one shot = one idea; key objects centred with room to breathe; three colours (ink, white, mint; coral only for mess); smooth eased motion; few, quiet sound effects.
+- **HeyGen `heygen-apple-motion` templates:** one ease family (`EO`/`EI`, exponential, no overshoot, no bounce, nothing linear); matched vectors at every cut (frame 02 leaves moving left, frame 03 arrives moving left, frame 03 leaves left, frame 04's first line arrives moving left); no idle motion; derived blur on fast moves; a damped counter-bounce on the lockup.
+- **shapelayer, launch blueprint:** text in a few big centred words, one beat each, part of the animation; UI rebuilt, not recorded, with a cursor pointing at the one thing that matters; a poster frame held for 3–4 s.
+- **notdwd and 0xmovez:** one shape, never cut. The storage bar becomes the Scan button, the button becomes the scan ring, the ring opens into the results banner. Crossfades are banned.
+- **Nate Parrott, Claude Design:** decide the type and colour before building. Inter (OFL, as `MessySans`), semibold, tight tracking, with Inter's single-storey a and flat-sided alternates.
+- **jake11moran, rexan_wong:** show only the part of the UI the story touches, larger, on a clean ground; real copy from the app.
+- **isaac.edits, Leo, beamnxw:** recorded sound effects (Pixabay set bundled with HyperFrames), placed only on actions.
 
-- **The form matches the pitch** (Firecrawl: the logo builds itself out of the product's own data). The coral scribble of mess, drawn across the real cache folders in Frame 1, untangles into the squiggle under the wordmark in Frame 3.
-- **One persistent motif** (Kevin Ngo's dot): the coral line runs from the first shot to the lockup.
-- **Tension buried mid-film, resolved in one cut** (Cloudflare): a stack of helper / password / trial / account dialogs, wiped by one broom stroke on the impact.
-- **Rebuilt UI, not screenshots** (Ondo, 2irl4u): the Check up screen, result cards, Run button, ring, toggles and treemap are HTML, large, isolated, each with its own motion. Real copy and real numbers from the app.
-- **Counted, not claimed** (Firecrawl): the junk amount counts up on the card.
-- **Payoff by one line held alone** (Cloudflare): "The cleaner you can read." over the app's real source, then the lockup and URL.
-- **Rhythm and sound** (isaac.edits, dhruvxr, Koldo): 120 BPM, every cut on a beat or bar, a sound on every hit, music and effects baked into one soundtrack (`design/sfx/make-soundtrack.swift`).
-- **Texture** (Kevin Ngo, Koldo): stepped film grain and a vignette on every frame, so nothing reads as flat digital.
+Literal animation: the disk literally fills; the cleaners' own extras literally drop into it; the broom literally sweeps the junk off the bar; the junk literally flies into the Trash in the Dock; memory literally drops; an app literally leaves with its leftovers; login items literally switch off.
 
-Banned defaults (N01ennn): a centred title on a gradient with everything fading in; screenshots as the hero; uniform fades; motion with no sound.
+Removed from v2 by request: the coral squiggle, the dust bunnies, Nunito, grain, hard-cut slams.
 
-Palette from `frame.md`: ink-teal ground, `text`, `text-muted`, mint = clean, coral = mess. Type: Nunito 900 for display (the wordmark's face), JetBrains Mono for paths, labels and code.
+The app UI stays in English in both versions (the app is English); only the headlines and captions are translated.
 
-## Frame 1 — The mess
+## Frame 1 — The disk fills
 
-- duration: 4s
+- duration: 8.5s
 - transition_in: cut
 - status: animated
-- src: compositions/frames/01-mess.html
+- src: compositions/frames/01-storage.html
 - type: hook
-- on_screen: "Your Mac keeps everything." / "Caches. Logs. Leftovers."
+- on_screen: "Your Mac fills up." / "Most cleaners add to the mess." / "Meet messy." / "One click finds it."
 
-The real folders Messy cleans fall and pile up on the half-beat; the coral scribble tangles across them; two dust bunnies land on top.
+## Frame 2 — One click, one shape
 
-## Frame 2 — The asks
-
-- duration: 4s
+- duration: 10.5s
 - transition_in: cut
 - status: animated
-- src: compositions/frames/02-asks.html
-- type: problem
-- on_screen: "Most cleaners want more than your mess."
-
-Generic system-style dialogs (helper tool, Full Disk Access, free trial, account, password, scareware, background item, upsell) slam onto a stack, one per beat; the room closes in; a riser into the cut.
-
-## Frame 3 — One sweep
-
-- duration: 2s
-- transition_in: cut
-- status: animated
-- src: compositions/frames/03-sweep.html
-- type: product_intro
-- on_screen: "messy" / "free · open source · for your Mac"
-
-Impact. The broom crosses the frame in one stroke, flicking every dialog away; the brand ground follows it; the scribble untangles into the squiggle; the wordmark lands on it.
-
-## Frame 4 — One button
-
-- duration: 4s
-- transition_in: cut
-- status: animated
-- src: compositions/frames/04-scan.html
+- src: compositions/frames/02-checkup.html
 - type: key_feature
-- on_screen: "Let's find the mess." / "Hunting for mess… N%"
+- on_screen: "It checks everything at once." / "Nothing changes until you press Run." / "Everything goes to the Trash first."
 
-Macro on the Scan button, the click on the beat, the camera pulls back, the ring fills and five module chips turn green on the beat.
+## Frame 3 — The rest of the job
 
-## Frame 5 — You press Run
-
-- duration: 4s
+- duration: 7s
 - transition_in: cut
 - status: animated
-- src: compositions/frames/05-results.html
-- type: key_feature
-- on_screen: "Nothing changes until you press Run." / "Everything goes to the Trash first."
-
-Three result cards fly in from depth, the junk amount counts up, Run is pressed, the cards fold into the Trash.
-
-## Frame 6 — The rest of the job
-
-- duration: 4s
-- transition_in: cut
-- status: animated
-- src: compositions/frames/06-everything.html
+- src: compositions/frames/03-features.html
 - type: benefits
-- on_screen: "And the rest of the job." / Monitor · Speed · Apps · Space · Protect · Menu bar
+- on_screen: "And the rest of the job." + five captions
 
-Six tiles land on the beat, each doing its own thing: a health score, toggles, leftovers folding into an app, a treemap, a shield scan, live bars.
+## Frame 4 — Promises, then the poster
 
-## Frame 7 — Trust
-
-- duration: 4s
+- duration: 8s
 - transition_in: cut
 - status: animated
-- src: compositions/frames/07-trust.html
-- type: proof
-- on_screen: "No helper running as root." / "No account." / "No telemetry."
-
-Three full-bleed slams on mint, ink and coral, hard cuts on the stabs.
-
-## Frame 8 — The cleaner you can read
-
-- duration: 6s
-- transition_in: cut
-- status: animated
-- src: compositions/frames/08-outro.html
+- src: compositions/frames/04-end.html
 - type: brand_outro
-- on_screen: "The cleaner you can read." / "messy" / "free & open source · macOS 14+" / "brk.bz/messy"
-
-The line alone over the app's real source code; hard cut on the bar to the icon, wordmark, squiggle and URL; the broom hops in; hold.
+- on_screen: "No root helper." / "No account." / "No telemetry." / "messy." / "Free and open source, for macOS." / "brk.bz/messy"

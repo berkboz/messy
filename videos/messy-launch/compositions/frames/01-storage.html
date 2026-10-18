@@ -1,0 +1,191 @@
+<template>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+  <style>
+    @font-face { font-family: "MessySans"; src: url("assets/fonts/inter-latin-wght-normal.woff2") format("woff2"); font-weight: 100 900;
+      unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+    @font-face { font-family: "MessySans"; src: url("assets/fonts/inter-latin-ext-wght-normal.woff2") format("woff2"); font-weight: 100 900;
+      unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF; }
+    #root { position: absolute; inset: 0; width: 1920px; height: 1080px; overflow: hidden; font-family: "MessySans", sans-serif; font-feature-settings: "cv11", "ss03"; color: #f3f6f5; }
+    #st-bg { position: absolute; inset: 0; background: radial-gradient(ellipse 60% 50% at 50% 56%, #0f1d1c 0%, #070d0c 70%); }
+    #st-stage { position: absolute; inset: 0; }
+    .st-mask { position: absolute; left: 0; width: 1920px; top: 236px; height: 140px; overflow: hidden; }
+    .st-line { position: absolute; left: 0; width: 1920px; top: 0; text-align: center; font-weight: 600; font-size: 104px; letter-spacing: -0.035em; line-height: 1.25; white-space: nowrap; }
+    .st-line .m { color: rgba(243, 246, 245, 0.42); }
+    .st-line .dot { color: #54d6c2; }
+    #st-svg { position: absolute; left: 0; top: 0; }
+    .st-meta { position: absolute; font-size: 26px; font-weight: 500; letter-spacing: -0.01em; color: rgba(243,246,245,0.56); }
+    #st-free { color: #f3f6f5; font-weight: 600; font-variant-numeric: tabular-nums; }
+    #st-legend { position: absolute; left: 360px; top: 650px; width: 1200px; display: flex; gap: 34px; font-size: 22px; font-weight: 500; color: rgba(243,246,245,0.6); }
+    #st-legend span { display: flex; align-items: center; gap: 10px; }
+    #st-legend i { width: 12px; height: 12px; border-radius: 4px; display: block; }
+    #st-pills { position: absolute; left: 0; width: 1920px; top: 440px; display: flex; justify-content: center; gap: 20px; }
+    .st-pill { position: relative; height: 58px; padding: 0 26px; border-radius: 29px; display: flex; align-items: center; gap: 12px;
+      background: #1a1413; border: 1.5px solid rgba(255, 122, 92, 0.55); color: #ffb3a1; font-size: 24px; font-weight: 600; white-space: nowrap; box-shadow: 0 20px 50px rgba(0,0,0,0.5); }
+    .st-pill svg { width: 22px; height: 22px; }
+    #st-broom { position: absolute; left: 0; top: 0; width: 360px; height: 360px; }
+    #st-scan { position: absolute; left: 810px; top: 518px; width: 300px; height: 84px; display: grid; place-items: center; font-size: 34px; font-weight: 600; letter-spacing: -0.02em; color: #052a1c; }
+  </style>
+
+  <div id="root" data-composition-id="01-storage" data-width="1920" data-height="1080" data-duration="8.5">
+    <div id="st-bg" class="clip" data-start="0" data-duration="8.5" data-track-index="0"></div>
+    <div id="st-stage" class="clip" data-start="0" data-duration="8.5" data-track-index="1" data-layout-allow-overflow>
+      <div class="st-mask"><div class="st-line" id="st-l1"></div><div class="st-line" id="st-l2"></div><div class="st-line" id="st-l3"></div><div class="st-line" id="st-l4"></div></div>
+
+      <div class="st-meta" id="st-disk" style="left:360px; top:470px">Macintosh HD</div>
+      <div class="st-meta" id="st-freewrap" style="right:360px; top:470px; text-align:right"><span id="st-free">198,4 GB</span> <span id="st-freelabel"></span></div>
+
+      <svg id="st-svg" width="1920" height="1080" viewBox="0 0 1920 1080">
+        <defs>
+          <clipPath id="st-clip"><rect id="st-cliprect" x="360" y="520" width="1200" height="80" rx="40" /></clipPath>
+          <linearGradient id="st-green" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5ee0a8" /><stop offset="1" stop-color="#2fb07c" /></linearGradient>
+        </defs>
+        <rect id="st-track" x="360" y="520" width="1200" height="80" rx="40" fill="rgba(255,255,255,0.07)" />
+        <g clip-path="url(#st-clip)" id="st-segs"></g>
+        <rect id="st-btn" x="360" y="520" width="1200" height="80" rx="40" fill="url(#st-green)" opacity="0" />
+      </svg>
+      <div id="st-legend"></div>
+      <div id="st-pills"></div>
+      <img id="st-broom" src="assets/mascot-sweep.png" alt="" />
+      <div id="st-scan">Scan</div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      const DURATION = 8.5;
+      const tl = gsap.timeline({ paused: true });
+      const $ = (id) => document.getElementById(id);
+      // One ease family: arrivals decay, exits accelerate (from HeyGen's motion templates).
+      const EO = (p) => (p >= 1 ? 1 : 1 - Math.pow(2, -10 * p));
+      const EI = (p) => (p <= 0 ? 0 : Math.pow(2, 10 * (p - 1)));
+      const LANG = (() => { try { const v = window.__hyperframes && window.__hyperframes.getVariables && window.__hyperframes.getVariables(); return (v && v.lang) || "en"; } catch (e) { return "en"; } })();
+      const T = (en, tr) => (LANG === "tr" ? tr : en);
+
+      // Headlines: each rises in from below and leaves upwards, blurred while it moves.
+      const lines = [
+        { id: "st-l1", html: T("Your Mac fills up.", "Mac\u2019in doluyor."), in: 0.1, out: 2.75 },
+        { id: "st-l2", html: T('Most cleaners <span class="m">add to the mess.</span>', 'Çoğu temizleyici <span class="m">yükü artırıyor.</span>'), in: 3.1, out: 5.6 },
+        { id: "st-l3", html: T('Meet messy<span class="dot">.</span>', 'Karşınızda messy<span class="dot">.</span>'), in: 5.95, out: 7.45 },
+        { id: "st-l4", html: T("One click finds it.", "Tek tıkla bulur."), in: 7.8, out: null },
+      ];
+      lines.forEach((l) => {
+        const el = $(l.id);
+        el.innerHTML = l.html;
+        gsap.set(el, { yPercent: 115 });
+        tl.fromTo(el, { yPercent: 115, filter: "blur(8px)" }, { yPercent: 0, filter: "blur(0px)", duration: 0.75, ease: EO }, l.in);
+        if (l.out) tl.to(el, { yPercent: -115, filter: "blur(8px)", duration: 0.32, ease: EI }, l.out);
+      });
+
+      // The disk fills, segment by segment, the way About This Mac draws it.
+      const segs = [
+        { k: T("System", "Sistem"), c: "#7d8a88", w: 0.16, t: 0.45 },
+        { k: T("Apps", "Uygulamalar"), c: "#a9b4b2", w: 0.22, t: 0.8 },
+        { k: T("Caches", "Önbellek"), c: "#ff7a5c", w: 0.19, t: 1.25 },
+        { k: T("Logs", "Günlükler"), c: "#ff9a7f", w: 0.1, t: 1.6 },
+        { k: "Xcode", c: "#ffb8a6", w: 0.17, t: 1.95 },
+        { k: T("Downloads", "İndirilenler"), c: "#ffd2c6", w: 0.13, t: 2.3 },
+      ];
+      const NS = "http://www.w3.org/2000/svg";
+      let x = 360;
+      const segEls = [];
+      segs.forEach((s, i) => {
+        const r = document.createElementNS(NS, "rect");
+        const w = 1200 * s.w;
+        r.setAttribute("x", x.toFixed(1)); r.setAttribute("y", "520"); r.setAttribute("width", (w + 1).toFixed(1)); r.setAttribute("height", "80");
+        r.setAttribute("fill", s.c); r.id = "st-seg-" + i;
+        $("st-segs").appendChild(r);
+        gsap.set(r, { scaleX: 0, transformOrigin: "0% 50%" });
+        tl.to(r, { scaleX: 1, duration: 0.6, ease: EO }, s.t);
+        segEls.push({ el: r, x, w, junk: i >= 2 });
+        const lg = document.createElement("span");
+        lg.id = "st-lg-" + i;
+        lg.innerHTML = '<i style="background:' + s.c + '"></i>' + s.k;
+        $("st-legend").appendChild(lg);
+        tl.fromTo(lg, { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.5, ease: EO }, s.t + 0.05);
+        x += w;
+      });
+      tl.fromTo(["#st-track", "#st-disk", "#st-freewrap"], { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.7, ease: EO }, 0.15);
+
+      // Free space counts down with the fill, then down to nothing as the cleaners' own extras land.
+      $("st-freelabel").textContent = T("free", "boş");
+      const free = { v: 198.4 };
+      const fmt = (v) => (v <= 0.05 ? "0" : v.toFixed(1).replace(".", ",")) + " GB";
+      const showFree = () => { $("st-free").textContent = fmt(free.v); $("st-free").style.color = free.v < 10 ? "#ff7a5c" : free.v > 40 ? "#f3f6f5" : "#f3f6f5"; };
+      showFree();
+      tl.fromTo(free, { v: 198.4 }, { v: 7.2, duration: 2.4, ease: EO, onUpdate: showFree, immediateRender: false }, 0.45);
+
+      // The cleaners' extras drop into the bar: a root helper, an agent, a monitor, a subscription.
+      const ICON = {
+        lock: '<svg viewBox="0 0 24 24" fill="none" stroke="#ff9a7f" stroke-width="2.2" stroke-linecap="round"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>',
+        bar: '<svg viewBox="0 0 24 24" fill="none" stroke="#ff9a7f" stroke-width="2.2" stroke-linecap="round"><rect x="3" y="4" width="18" height="5" rx="1.5"/><path d="M7 14h10M7 18h6"/></svg>',
+        eye: '<svg viewBox="0 0 24 24" fill="none" stroke="#ff9a7f" stroke-width="2.2"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>',
+        card: '<svg viewBox="0 0 24 24" fill="none" stroke="#ff9a7f" stroke-width="2.2" stroke-linecap="round"><rect x="2.5" y="5" width="19" height="14" rx="2"/><path d="M2.5 10h19"/></svg>',
+      };
+      const pills = [
+        { t: T("Root helper", "Root yetkili yardımcı"), i: "lock", x: 520 },
+        { t: T("Menu bar agent", "Menü çubuğu ajanı"), i: "bar", x: 830 },
+        { t: T("Background monitor", "Arka plan izleyici"), i: "eye", x: 1130 },
+        { t: T("Subscription", "Abonelik"), i: "card", x: 1420 },
+      ];
+      const pillEls = [];
+      pills.forEach((p, i) => {
+        const el = document.createElement("div");
+        el.className = "st-pill";
+        el.id = "st-pill-" + i;
+        el.innerHTML = ICON[p.i] + p.t;
+        $("st-pills").appendChild(el);
+        pillEls.push(el);
+        const t = 3.45 + i * 0.5;
+        // falls (accelerating), lands on the bar, settles on the arriving curve
+        tl.fromTo(el, { y: -560, rotation: i % 2 ? 6 : -6, opacity: 1 },
+          { y: -6, rotation: i % 2 ? 2 : -2, duration: 0.42, ease: EI }, t);
+        tl.to(el, { y: 0, duration: 0.5, ease: EO }, t + 0.42);
+        // each landing pushes the bar down a hair and takes more free space
+        tl.to("#st-svg, #st-legend", { y: 6, duration: 0.06, ease: EO }, t + 0.42);
+        tl.to("#st-svg, #st-legend", { y: 0, duration: 0.45, ease: EO }, t + 0.48);
+      });
+      tl.to(["#st-disk", "#st-freewrap"], { opacity: 0, y: -12, duration: 0.3, ease: EI }, 3.3);
+      tl.to(["#st-disk", "#st-freewrap"], { opacity: 1, y: 0, duration: 0.5, ease: EO }, 6.95);
+      tl.fromTo(free, { v: 7.2 }, { v: 0, duration: 2.0, ease: EO, onUpdate: showFree, immediateRender: false }, 3.85);
+
+      // The broom sweeps the bar: junk segments and the extras go, free space comes back.
+      gsap.set($("st-broom"), { x: -480, y: 330, rotation: -14 });
+      const SW = 6.15, SWD = 0.9;
+      tl.to($("st-broom"), { x: 2060, duration: SWD, ease: "none" }, SW);
+      tl.to($("st-broom"), { rotation: 8, duration: SWD / 2, ease: EO }, SW);
+      tl.to($("st-broom"), { rotation: -6, duration: SWD / 2, ease: EI }, SW + SWD / 2);
+      const broomAt = (px) => SW + ((px - 40 + 480) / (2060 + 480)) * SWD;
+      segEls.filter((s) => s.junk).forEach((s) => {
+        const t = broomAt(s.x);
+        tl.to(s.el, { scaleX: 0, transformOrigin: "100% 50%", duration: 0.35, ease: EI }, t);
+      });
+      pillEls.forEach((el, i) => {
+        const t = broomAt(pills[i].x - 200);
+        tl.to(el, { x: "+=900", y: "-=" + (60 + i * 30), rotation: 24, opacity: 0, filter: "blur(6px)", duration: 0.45, ease: EI }, t);
+      });
+      [2, 3, 4, 5].forEach((i) => tl.to("#st-lg-" + i, { opacity: 0, y: -10, duration: 0.3, ease: EI }, broomAt(segEls[i].x)));
+      tl.fromTo(free, { v: 0 }, { v: 48.6, duration: 1.0, ease: EO, onUpdate: showFree, immediateRender: false }, SW + 0.35);
+
+      // The bar becomes the Scan button: one shape, never cut.
+      const M = 7.15;
+      tl.to(["#st-disk", "#st-freewrap", "#st-legend"], { opacity: 0, y: -16, duration: 0.3, ease: EI }, M - 0.1);
+      tl.to("#st-segs rect", { opacity: 0, duration: 0.25, ease: EI }, M);
+      const morph = { x: 360, y: 520, w: 1200, h: 80 };
+      const setShape = () => {
+        ["st-track", "st-btn", "st-cliprect"].forEach((id) => {
+          const r = $(id);
+          r.setAttribute("x", morph.x.toFixed(1)); r.setAttribute("y", morph.y.toFixed(1));
+          r.setAttribute("width", morph.w.toFixed(1)); r.setAttribute("height", morph.h.toFixed(1)); r.setAttribute("rx", (morph.h / 2).toFixed(1));
+        });
+      };
+      setShape();
+      tl.fromTo(morph, { x: 360, y: 520, w: 1200, h: 80 }, { x: 810, y: 518, w: 300, h: 84, duration: 0.75, ease: EO, onUpdate: setShape, immediateRender: false }, M);
+      tl.to("#st-btn", { opacity: 1, duration: 0.35, ease: EO }, M + 0.1);
+      tl.fromTo("#st-scan", { opacity: 0, scale: 0.9 }, { opacity: 1, scale: 1, duration: 0.5, ease: EO }, M + 0.45);
+
+      tl.set({}, {}, DURATION);
+      window.__timelines = window.__timelines || {};
+      window.__timelines["01-storage"] = tl;
+    })();
+  </script>
+</template>

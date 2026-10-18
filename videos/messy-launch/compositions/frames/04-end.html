@@ -1,0 +1,89 @@
+<template>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+  <style>
+    @font-face { font-family: "MessySans"; src: url("assets/fonts/inter-latin-wght-normal.woff2") format("woff2"); font-weight: 100 900;
+      unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+    @font-face { font-family: "MessySans"; src: url("assets/fonts/inter-latin-ext-wght-normal.woff2") format("woff2"); font-weight: 100 900;
+      unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF; }
+    #root { position: absolute; inset: 0; width: 1920px; height: 1080px; overflow: hidden; font-family: "MessySans", sans-serif; font-feature-settings: "cv11", "ss03"; color: #f3f6f5; }
+    #en-bg { position: absolute; inset: 0; background: radial-gradient(ellipse 60% 50% at 50% 50%, #0f1d1c 0%, #070d0c 70%); }
+    #en-stage { position: absolute; inset: 0; }
+    .en-mask { position: absolute; left: 0; width: 1920px; top: 455px; height: 170px; overflow: hidden; }
+    .en-line { position: absolute; left: 0; width: 1920px; top: 0; text-align: center; font-weight: 600; font-size: 128px; letter-spacing: -0.04em; line-height: 1.3; white-space: nowrap; }
+    .en-line .m { color: rgba(243, 246, 245, 0.42); }
+    #en-poster { position: absolute; inset: 0; }
+    #en-icon { position: absolute; left: 840px; top: 200px; width: 240px; height: 240px; }
+    #en-icon img { width: 240px; height: 240px; display: block; }
+    #en-gloss { position: absolute; left: 840px; top: 200px; width: 240px; height: 240px; border-radius: 54px; overflow: hidden; }
+    #en-gloss i { position: absolute; top: -60px; left: 0; width: 80px; height: 360px; background: linear-gradient(90deg, rgba(255,255,255,0), rgba(255,255,255,0.45), rgba(255,255,255,0)); display: block; }
+    #en-word { position: absolute; left: 0; width: 1920px; top: 478px; text-align: center; font-weight: 600; font-size: 150px; letter-spacing: -0.045em; line-height: 1; }
+    #en-word .dot { color: #54d6c2; }
+    #en-sub { position: absolute; left: 0; width: 1920px; top: 676px; text-align: center; font-weight: 500; font-size: 38px; letter-spacing: -0.02em; color: rgba(243,246,245,0.55); }
+    #en-url { position: absolute; left: 785px; top: 756px; width: 350px; height: 76px; border-radius: 38px; border: 1.5px solid rgba(84,214,194,0.45); background: rgba(84,214,194,0.08);
+      display: grid; place-items: center; font-weight: 600; font-size: 34px; letter-spacing: -0.02em; color: #7be8d6; }
+  </style>
+
+  <div id="root" data-composition-id="04-end" data-width="1920" data-height="1080" data-duration="8">
+    <div id="en-bg" class="clip" data-start="0" data-duration="8" data-track-index="0"></div>
+    <div id="en-stage" class="clip" data-start="0" data-duration="8" data-track-index="1" data-layout-allow-overflow>
+      <div class="en-mask"><div class="en-line" id="en-l1"></div><div class="en-line" id="en-l2"></div><div class="en-line" id="en-l3"></div></div>
+      <div id="en-poster">
+        <div id="en-icon"><img src="assets/messy-icon.png" alt="" /></div>
+        <div id="en-gloss"><i id="en-shine"></i></div>
+        <div id="en-word">messy<span class="dot">.</span></div>
+        <div id="en-sub"></div>
+        <div id="en-url">brk.bz/messy</div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      const DURATION = 8;
+      const tl = gsap.timeline({ paused: true });
+      const $ = (id) => document.getElementById(id);
+      const EO = (p) => (p >= 1 ? 1 : 1 - Math.pow(2, -10 * p));
+      const EI = (p) => (p <= 0 ? 0 : Math.pow(2, 10 * (p - 1)));
+      const LANG = (() => { try { const v = window.__hyperframes && window.__hyperframes.getVariables && window.__hyperframes.getVariables(); return (v && v.lang) || "en"; } catch (e) { return "en"; } })();
+      const T = (en, tr) => (LANG === "tr" ? tr : en);
+
+      // Three promises, one at a time. The first arrives moving left, continuing frame 03's pan.
+      const L = [
+        { id: "en-l1", html: T('No <span class="m">root helper.</span>', 'Root yardımcı <span class="m">yok.</span>'), in: 0.0, out: 0.95 },
+        { id: "en-l2", html: T('No <span class="m">account.</span>', 'Hesap <span class="m">yok.</span>'), in: 1.05, out: 1.95 },
+        { id: "en-l3", html: T('No <span class="m">telemetry.</span>', 'Telemetri <span class="m">yok.</span>'), in: 2.05, out: 3.0 },
+      ];
+      L.forEach((l, i) => {
+        const el = $(l.id);
+        el.innerHTML = l.html;
+        gsap.set(el, { yPercent: 115 });
+        if (i === 0) tl.fromTo(el, { yPercent: 0, x: 700, filter: "blur(10px)" }, { x: 0, filter: "blur(0px)", duration: 0.8, ease: EO }, l.in);
+        else tl.fromTo(el, { yPercent: 115, filter: "blur(8px)" }, { yPercent: 0, filter: "blur(0px)", duration: 0.7, ease: EO }, l.in);
+        tl.to(el, { yPercent: -115, filter: "blur(8px)", duration: 0.3, ease: EI }, l.out);
+      });
+
+      // The poster: rises in, the icon and the name counter-bounce once, then it holds still.
+      $("en-sub").textContent = T("Free and open source, for macOS.", "macOS için ücretsiz ve açık kaynak.");
+      const P = 3.15;
+      tl.fromTo("#en-icon", { y: 160, opacity: 0, filter: "blur(10px)" }, { y: 0, opacity: 1, filter: "blur(0px)", duration: 0.9, ease: EO }, P);
+      tl.fromTo("#en-word", { y: 120, opacity: 0, filter: "blur(10px)" }, { y: 0, opacity: 1, filter: "blur(0px)", duration: 0.9, ease: EO }, P + 0.08);
+      const spring = { t: 0 };
+      tl.to(spring, { t: 1.4, duration: 1.4, ease: "none", onUpdate: () => {
+        const t = spring.t;
+        const A = 10 * Math.exp(-t / 0.279) * Math.sin((2 * Math.PI * t) / 0.5);
+        gsap.set("#en-gloss", { y: A });
+        $("en-icon").style.translate = "0 " + A.toFixed(2) + "px";
+        $("en-word").style.translate = "0 " + (-A).toFixed(2) + "px";
+      } }, P + 0.55);
+      tl.fromTo("#en-sub", { y: 30, opacity: 0 }, { y: 0, opacity: 1, duration: 0.8, ease: EO }, P + 0.45);
+      tl.fromTo("#en-url", { y: 30, opacity: 0 }, { y: 0, opacity: 1, duration: 0.8, ease: EO }, P + 0.6);
+      // one shimmer across the icon
+      gsap.set("#en-shine", { x: -120, rotation: 20 });
+      tl.to("#en-shine", { x: 300, duration: 0.8, ease: (p) => p * p * (3 - 2 * p) }, P + 1.2);
+
+      tl.set({}, {}, DURATION);
+      window.__timelines = window.__timelines || {};
+      window.__timelines["04-end"] = tl;
+    })();
+  </script>
+</template>

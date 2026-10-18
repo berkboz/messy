@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-composition-variables='[{"id":"lang","type":"enum","label":"Language","default":"en","options":[{"value":"en","label":"English"},{"value":"tr","label":"Türkçe"}]}]'>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=1920, height=1080" />
@@ -37,100 +37,389 @@
       id="root"
       data-composition-id="main"
       data-start="0"
-      data-duration="32"
+      data-duration="34"
       data-width="1920"
       data-height="1080"
     >
       <div
-        id="el-01-mess"
+        id="el-01-storage"
         class="scene"
-        data-composition-id="01-mess"
-        data-composition-src="compositions/frames/01-mess.html"
+        data-composition-id="01-storage"
+        data-composition-src="compositions/frames/01-storage.html" data-variable-values='{"lang":"en"}'
         data-start="0"
-        data-duration="4"
+        data-duration="8.5"
         data-track-index="1"
       ></div>
 
       <div
-        id="el-02-asks"
+        id="el-02-checkup"
         class="scene"
-        data-composition-id="02-asks"
-        data-composition-src="compositions/frames/02-asks.html"
-        data-start="4"
-        data-duration="4"
+        data-composition-id="02-checkup"
+        data-composition-src="compositions/frames/02-checkup.html" data-variable-values='{"lang":"en"}'
+        data-start="8.5"
+        data-duration="10.5"
         data-track-index="1"
       ></div>
 
       <div
-        id="el-03-sweep"
+        id="el-03-features"
         class="scene"
-        data-composition-id="03-sweep"
-        data-composition-src="compositions/frames/03-sweep.html"
-        data-start="8"
-        data-duration="2"
+        data-composition-id="03-features"
+        data-composition-src="compositions/frames/03-features.html" data-variable-values='{"lang":"en"}'
+        data-start="19"
+        data-duration="7"
         data-track-index="1"
       ></div>
 
       <div
-        id="el-04-scan"
+        id="el-04-end"
         class="scene"
-        data-composition-id="04-scan"
-        data-composition-src="compositions/frames/04-scan.html"
-        data-start="10"
-        data-duration="4"
-        data-track-index="1"
-      ></div>
-
-      <div
-        id="el-05-results"
-        class="scene"
-        data-composition-id="05-results"
-        data-composition-src="compositions/frames/05-results.html"
-        data-start="14"
-        data-duration="4"
-        data-track-index="1"
-      ></div>
-
-      <div
-        id="el-06-everything"
-        class="scene"
-        data-composition-id="06-everything"
-        data-composition-src="compositions/frames/06-everything.html"
-        data-start="18"
-        data-duration="4"
-        data-track-index="1"
-      ></div>
-
-      <div
-        id="el-07-trust"
-        class="scene"
-        data-composition-id="07-trust"
-        data-composition-src="compositions/frames/07-trust.html"
-        data-start="22"
-        data-duration="4"
-        data-track-index="1"
-      ></div>
-
-      <div
-        id="el-08-outro"
-        class="scene"
-        data-composition-id="08-outro"
-        data-composition-src="compositions/frames/08-outro.html"
+        data-composition-id="04-end"
+        data-composition-src="compositions/frames/04-end.html" data-variable-values='{"lang":"en"}'
         data-start="26"
-        data-duration="6"
+        data-duration="8"
         data-track-index="1"
       ></div>
 
       <!-- BGM -->
       <audio
         id="el-bgm"
-        src="assets/music/messy-soundtrack.wav"
+        src="assets/music/messy-bed-v3.wav"
         data-start="0"
-        data-duration="32"
+        data-duration="34"
         data-track-index="11"
-        data-volume="0.9"
+        data-volume="0.55"
       ></audio>
 
+      <!-- SFX -->
+      <audio
+        id="el-sfx-0"
+        src="assets/sfx/click-soft.mp3"
+        data-start="0.45"
+        data-duration="0.37"
+        data-track-index="20"
+        data-volume="0.18"
+      ></audio>
+      <audio
+        id="el-sfx-1"
+        src="assets/sfx/click-soft.mp3"
+        data-start="0.8"
+        data-duration="0.37"
+        data-track-index="21"
+        data-volume="0.18"
+      ></audio>
+      <audio
+        id="el-sfx-2"
+        src="assets/sfx/click-soft.mp3"
+        data-start="1.25"
+        data-duration="0.37"
+        data-track-index="22"
+        data-volume="0.18"
+      ></audio>
+      <audio
+        id="el-sfx-3"
+        src="assets/sfx/click-soft.mp3"
+        data-start="1.6"
+        data-duration="0.37"
+        data-track-index="23"
+        data-volume="0.18"
+      ></audio>
+      <audio
+        id="el-sfx-4"
+        src="assets/sfx/click-soft.mp3"
+        data-start="1.95"
+        data-duration="0.37"
+        data-track-index="24"
+        data-volume="0.18"
+      ></audio>
+      <audio
+        id="el-sfx-5"
+        src="assets/sfx/click-soft.mp3"
+        data-start="2.3"
+        data-duration="0.37"
+        data-track-index="25"
+        data-volume="0.18"
+      ></audio>
+      <audio
+        id="el-sfx-6"
+        src="assets/sfx/pop.mp3"
+        data-start="3.87"
+        data-duration="0.72"
+        data-track-index="26"
+        data-volume="0.22"
+      ></audio>
+      <audio
+        id="el-sfx-7"
+        src="assets/sfx/pop.mp3"
+        data-start="4.37"
+        data-duration="0.72"
+        data-track-index="27"
+        data-volume="0.22"
+      ></audio>
+      <audio
+        id="el-sfx-8"
+        src="assets/sfx/pop.mp3"
+        data-start="4.87"
+        data-duration="0.72"
+        data-track-index="28"
+        data-volume="0.22"
+      ></audio>
+      <audio
+        id="el-sfx-9"
+        src="assets/sfx/pop.mp3"
+        data-start="5.37"
+        data-duration="0.72"
+        data-track-index="29"
+        data-volume="0.22"
+      ></audio>
+      <audio
+        id="el-sfx-10"
+        src="assets/sfx/sparkle.mp3"
+        data-start="5.95"
+        data-duration="1.8"
+        data-track-index="30"
+        data-volume="0.22"
+      ></audio>
+      <audio
+        id="el-sfx-11"
+        src="assets/sfx/whoosh.mp3"
+        data-start="6.2"
+        data-duration="0.57"
+        data-track-index="31"
+        data-volume="0.38"
+      ></audio>
+      <audio
+        id="el-sfx-12"
+        src="assets/sfx/whoosh-short.mp3"
+        data-start="7.15"
+        data-duration="0.57"
+        data-track-index="32"
+        data-volume="0.2"
+      ></audio>
+      <audio
+        id="el-sfx-13"
+        src="assets/sfx/click.mp3"
+        data-start="9.24"
+        data-duration="0.37"
+        data-track-index="33"
+        data-volume="0.5"
+      ></audio>
+      <audio
+        id="el-sfx-14"
+        src="assets/sfx/whoosh-short.mp3"
+        data-start="9.5"
+        data-duration="0.57"
+        data-track-index="34"
+        data-volume="0.2"
+      ></audio>
+      <audio
+        id="el-sfx-15"
+        src="assets/sfx/click-soft.mp3"
+        data-start="10.5"
+        data-duration="0.37"
+        data-track-index="35"
+        data-volume="0.2"
+      ></audio>
+      <audio
+        id="el-sfx-16"
+        src="assets/sfx/click-soft.mp3"
+        data-start="11"
+        data-duration="0.37"
+        data-track-index="36"
+        data-volume="0.2"
+      ></audio>
+      <audio
+        id="el-sfx-17"
+        src="assets/sfx/click-soft.mp3"
+        data-start="11.5"
+        data-duration="0.37"
+        data-track-index="37"
+        data-volume="0.2"
+      ></audio>
+      <audio
+        id="el-sfx-18"
+        src="assets/sfx/click-soft.mp3"
+        data-start="12"
+        data-duration="0.37"
+        data-track-index="38"
+        data-volume="0.2"
+      ></audio>
+      <audio
+        id="el-sfx-19"
+        src="assets/sfx/click-soft.mp3"
+        data-start="12.5"
+        data-duration="0.37"
+        data-track-index="39"
+        data-volume="0.2"
+      ></audio>
+      <audio
+        id="el-sfx-20"
+        src="assets/sfx/ping.mp3"
+        data-start="12.6"
+        data-duration="1.32"
+        data-track-index="40"
+        data-volume="0.25"
+      ></audio>
+      <audio
+        id="el-sfx-21"
+        src="assets/sfx/whoosh-short.mp3"
+        data-start="12.7"
+        data-duration="0.57"
+        data-track-index="41"
+        data-volume="0.2"
+      ></audio>
+      <audio
+        id="el-sfx-22"
+        src="assets/sfx/pop.mp3"
+        data-start="13.45"
+        data-duration="0.72"
+        data-track-index="42"
+        data-volume="0.18"
+      ></audio>
+      <audio
+        id="el-sfx-23"
+        src="assets/sfx/click.mp3"
+        data-start="15.86"
+        data-duration="0.37"
+        data-track-index="43"
+        data-volume="0.5"
+      ></audio>
+      <audio
+        id="el-sfx-24"
+        src="assets/sfx/whoosh-short.mp3"
+        data-start="16.4"
+        data-duration="0.57"
+        data-track-index="44"
+        data-volume="0.22"
+      ></audio>
+      <audio
+        id="el-sfx-25"
+        src="assets/sfx/whoosh-short.mp3"
+        data-start="16.7"
+        data-duration="0.57"
+        data-track-index="45"
+        data-volume="0.18"
+      ></audio>
+      <audio
+        id="el-sfx-26"
+        src="assets/sfx/pop.mp3"
+        data-start="17.1"
+        data-duration="0.72"
+        data-track-index="46"
+        data-volume="0.3"
+      ></audio>
+      <audio
+        id="el-sfx-27"
+        src="assets/sfx/whoosh.mp3"
+        data-start="18.45"
+        data-duration="0.57"
+        data-track-index="47"
+        data-volume="0.3"
+      ></audio>
+      <audio
+        id="el-sfx-28"
+        src="assets/sfx/click.mp3"
+        data-start="19.55"
+        data-duration="0.37"
+        data-track-index="48"
+        data-volume="0.4"
+      ></audio>
+      <audio
+        id="el-sfx-29"
+        src="assets/sfx/whoosh-short.mp3"
+        data-start="20.05"
+        data-duration="0.57"
+        data-track-index="49"
+        data-volume="0.16"
+      ></audio>
+      <audio
+        id="el-sfx-30"
+        src="assets/sfx/whoosh-short.mp3"
+        data-start="21.35"
+        data-duration="0.57"
+        data-track-index="50"
+        data-volume="0.16"
+      ></audio>
+      <audio
+        id="el-sfx-31"
+        src="assets/sfx/whoosh-short.mp3"
+        data-start="22.65"
+        data-duration="0.57"
+        data-track-index="51"
+        data-volume="0.16"
+      ></audio>
+      <audio
+        id="el-sfx-32"
+        src="assets/sfx/whoosh-short.mp3"
+        data-start="23.95"
+        data-duration="0.57"
+        data-track-index="52"
+        data-volume="0.16"
+      ></audio>
+      <audio
+        id="el-sfx-33"
+        src="assets/sfx/pop.mp3"
+        data-start="21.76"
+        data-duration="0.72"
+        data-track-index="53"
+        data-volume="0.25"
+      ></audio>
+      <audio
+        id="el-sfx-34"
+        src="assets/sfx/click-soft.mp3"
+        data-start="21.8"
+        data-duration="0.37"
+        data-track-index="54"
+        data-volume="0.22"
+      ></audio>
+      <audio
+        id="el-sfx-35"
+        src="assets/sfx/click-soft.mp3"
+        data-start="22.05"
+        data-duration="0.37"
+        data-track-index="55"
+        data-volume="0.22"
+      ></audio>
+      <audio
+        id="el-sfx-36"
+        src="assets/sfx/click-soft.mp3"
+        data-start="22.3"
+        data-duration="0.37"
+        data-track-index="56"
+        data-volume="0.22"
+      ></audio>
+      <audio
+        id="el-sfx-37"
+        src="assets/sfx/ping.mp3"
+        data-start="24.75"
+        data-duration="1.32"
+        data-track-index="57"
+        data-volume="0.25"
+      ></audio>
+      <audio
+        id="el-sfx-38"
+        src="assets/sfx/whoosh.mp3"
+        data-start="25.45"
+        data-duration="0.57"
+        data-track-index="58"
+        data-volume="0.28"
+      ></audio>
+      <audio
+        id="el-sfx-39"
+        src="assets/sfx/impact-bass-2.mp3"
+        data-start="28.15"
+        data-duration="2.59"
+        data-track-index="59"
+        data-volume="0.35"
+      ></audio>
+      <audio
+        id="el-sfx-40"
+        src="assets/sfx/sparkle.mp3"
+        data-start="30.35"
+        data-duration="1.8"
+        data-track-index="60"
+        data-volume="0.25"
+      ></audio>
     </div>
 
     <script>
