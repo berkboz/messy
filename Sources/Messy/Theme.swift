@@ -49,7 +49,7 @@ struct ScanRing: View {
                 .stroke(AngularGradient(colors: [Brand.teal, Brand.emerald, Brand.teal], center: .center),
                         style: StrokeStyle(lineWidth: lineWidth, lineCap: .round))
                 .rotationEffect(.degrees(-90))
-                .animation(.easeInOut(duration: 0.5), value: progress)
+                .animation(spinning ? nil : .easeInOut(duration: 0.5), value: progress)
             if spinning {
                 TimelineView(.animation) { ctx in
                     let t = ctx.date.timeIntervalSinceReferenceDate.truncatingRemainder(dividingBy: 1.6) / 1.6

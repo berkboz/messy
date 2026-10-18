@@ -35,6 +35,11 @@ final class CheckupModel: ObservableObject {
 
     @Published var phase: Phase = .idle
     @Published var finished: Set<Module> = []
+    /// What the ring shows: eased over time so it never jumps, a little ahead of the real work,
+    /// and only reaching 100% once every module is done.
+    @Published var shown: Double = 0
+    private var ticker: Timer?
+    private var scanStart = Date()
     @Published var selected: Set<Module> = []
     @Published var confirm = false
     @Published var summary: [String] = []
@@ -71,6 +76,9 @@ final class CheckupModel: ObservableObject {
         withAnimation(.easeInOut(duration: 0.3)) { phase = .scanning }
         Sound.scan.play()
         finished = []
+        shown = 0
+        scanStart = Date()
+        startTicker()
         summary = []
         problems = []
         let speed = store.speed
@@ -80,7 +88,6 @@ final class CheckupModel: ObservableObject {
                 guard !t.cancelled else { return }
                 apply()
                 self.finished.insert(m)
-                if self.finished.count == self.modules.count { self.finishScan() }
             }
         }
 
@@ -124,7 +131,40 @@ final class CheckupModel: ObservableObject {
         }
     }
 
+    /// Drives `shown` at 30 fps while scanning: it moves from the first frame, slows as it goes,
+    /// stays below 94% until the last module reports, then runs to 100%.
+    private func startTicker() {
+        ticker?.invalidate()
+        let t = Timer(timeInterval: 1.0 / 30, repeats: true) { [weak self] _ in self?.tick() }
+        RunLoop.main.add(t, forMode: .common)
+        ticker = t
+    }
+
+    private func tick() {
+        let all: Bool = finished.count == modules.count
+        let elapsed: Double = Date().timeIntervalSince(scanStart)
+        // Fills quickly at first and slows down, never finishing on its own: 22% at 1 s,
+        // 39% at 2 s, 53% at 3 s, 71% at 5 s. When every module is done it runs out to 100%.
+        let pace: Double = 1.0 - exp(-elapsed / 4.0)
+        let cap: Double = all ? 1.0 : 0.94
+        // even when everything reports at once, filling up takes about two seconds
+        let finish: Double = min(1.0, max(pace, 0.5 + elapsed / 4.0))
+        let target: Double = all ? finish : min(cap, pace)
+        let rate: Double = all ? 0.16 : 0.2
+        if target > shown { shown += (target - shown) * rate + (all ? 0.002 : 0) }
+        shown = min(shown, cap)
+        if all && shown > 0.995 {
+            shown = 1
+            ticker?.invalidate(); ticker = nil
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.35) { [weak self] in
+                guard let self, self.phase == .scanning else { return }
+                self.finishScan()
+            }
+        }
+    }
+
     func cancel() {
+        ticker?.invalidate(); ticker = nil
         token.cancel()
         withAnimation(.easeInOut(duration: 0.3)) { phase = .idle }
     }
@@ -268,14 +308,16 @@ struct CheckupView: View {
     private var scanning: some View {
         VStack(spacing: 26) {
             ZStack {
-                ScanRing(progress: model.progress, spinning: true, size: 230, lineWidth: 14)
+                ScanRing(progress: model.shown, spinning: true, size: 230, lineWidth: 14)
                 Mascot(pose: .sweep, size: 128, motion: .sweep)
             }
-            Text("Hunting for mess… \(Int(model.progress * 100))%")
+            Text("Hunting for mess… \(Int(model.shown * 100))%")
                 .font(.title2.bold()).monospacedDigit().contentTransition(.numericText())
             HStack(spacing: 10) {
-                ForEach(model.modules) { m in
-                    let done = model.finished.contains(m)
+                ForEach(Array(model.modules.enumerated()), id: \.element) { i, m in
+                    // a chip ticks when the ring passes its slot, so they go one by one
+                    let slot: Double = Double(i + 1) / Double(model.modules.count)
+                    let done: Bool = model.finished.contains(m) && model.shown >= slot - 0.001
                     HStack(spacing: 6) {
                         Image(systemName: done ? "checkmark.circle.fill" : m.icon)
                             .foregroundStyle(done ? AnyShapeStyle(Brand.emerald) : AnyShapeStyle(Brand.gradient))
