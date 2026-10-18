@@ -302,3 +302,59 @@ extension View {
         .listRowSeparator(.hidden)
     }
 }
+
+// MARK: - Messy brand
+
+extension Brand {
+    /// The colour of mess: what was found, how much. Mint is what is clean.
+    static let coral = Color(red: 1.0, green: 0.52, blue: 0.42)
+}
+
+/// A hand-drawn-looking squiggle, used under the wordmark and page titles.
+struct Squiggle: Shape {
+    var waves = 3.0
+
+    func path(in r: CGRect) -> Path {
+        var p = Path()
+        let steps = 60
+        for i in 0...steps {
+            let x = r.minX + r.width * Double(i) / Double(steps)
+            // A little uneven on purpose, so it reads as drawn by hand.
+            let wobble = 1 + 0.18 * sin(Double(i) * 0.7)
+            let y = r.midY + sin(Double(i) / Double(steps) * waves * 2 * .pi) * r.height / 2 * wobble * 0.8
+            i == 0 ? p.move(to: CGPoint(x: x, y: y)) : p.addLine(to: CGPoint(x: x, y: y))
+        }
+        return p
+    }
+}
+
+/// The lowercase "messy" wordmark with its coral squiggle.
+struct Wordmark: View {
+    var size: CGFloat = 22
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: size * 0.02) {
+            Text("messy")
+                .font(.system(size: size, weight: .heavy, design: .rounded))
+                .tracking(-0.5)
+            Squiggle()
+                .stroke(Brand.coral, style: StrokeStyle(lineWidth: max(2, size * 0.11), lineCap: .round, lineJoin: .round))
+                .frame(width: size * 2.75, height: size * 0.3)
+        }
+    }
+}
+
+/// A dust bunny: the mess, as a character. Static image, gently wobbling on a Core Animation layer.
+struct DustBunny: View {
+    enum Mood: String { case idle, scared, gone }
+    let mood: Mood
+    var size: CGFloat = 48
+
+    var body: some View {
+        if let url = Bundle.main.url(forResource: "dust-\(mood.rawValue)", withExtension: "png"),
+           let img = NSImage(contentsOf: url) {
+            Image(nsImage: img).resizable().interpolation(.high).aspectRatio(contentMode: .fit)
+                .frame(width: size, height: size)
+        }
+    }
+}

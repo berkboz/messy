@@ -103,8 +103,8 @@ struct OnboardingView: View {
     private var welcome: some View {
         VStack(spacing: 18) {
             Mascot(pose: .happy, size: 120, motion: .bob)
-            Text("Welcome to Messy").font(.largeTitle.bold())
-            Text("A free, open-source maintenance tool for your Mac: cleaning, uninstalling apps, disk analysis, a system monitor and a security check in one window.")
+            Wordmark(size: 40)
+            Text("Messy finds the mess on your Mac: caches, leftovers, duplicates, things running in the background. Its little broom sweeps it up, and only when you say so. Free and open source.")
                 .multilineTextAlignment(.center)
                 .foregroundStyle(.secondary)
                 .frame(maxWidth: 440)

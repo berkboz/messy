@@ -252,7 +252,7 @@ struct CheckupView: View {
                 Mascot(pose: .idle, size: 132, motion: .bob)
             }
             VStack(spacing: 6) {
-                Text("Ready for a check up?").font(.largeTitle.bold())
+                Text("Let's find the mess.").font(.largeTitle.bold())
                 Text("Looks for junk, threats, maintenance that is due and duplicates in Downloads, all at once. Nothing changes until you review the results and press Run.")
                     .multilineTextAlignment(.center).foregroundStyle(.secondary).frame(maxWidth: 460)
             }
@@ -271,7 +271,7 @@ struct CheckupView: View {
                 ScanRing(progress: model.progress, spinning: true, size: 230, lineWidth: 14)
                 Mascot(pose: .sweep, size: 128, motion: .sweep)
             }
-            Text("Sweeping… \(Int(model.progress * 100))%")
+            Text("Hunting for mess… \(Int(model.progress * 100))%")
                 .font(.title2.bold()).monospacedDigit().contentTransition(.numericText())
             HStack(spacing: 10) {
                 ForEach(model.modules) { m in
@@ -295,7 +295,7 @@ struct CheckupView: View {
 
     private var results: some View {
         VStack(alignment: .leading, spacing: 0) {
-            PaneHeader(title: "Check up results",
+            PaneHeader(title: "Here's the mess",
                        subtitle: "Ticked cards run together. Open Review to see or change exactly what is included.") {
                 HStack {
                     Button("Scan again") { model.start() }
@@ -307,6 +307,12 @@ struct CheckupView: View {
             ScrollView {
                 HStack(spacing: 16) {
                     Mascot(pose: model.threats.contains { $0.trust == .danger } ? .worried : .happy, size: 76, motion: .bob)
+                    if model.junk > 0 || model.duplicatesSize > 0 {
+                        HStack(spacing: -10) {
+                            DustBunny(mood: .scared, size: 38)
+                            DustBunny(mood: .idle, size: 30).offset(y: 8)
+                        }
+                    }
                     VStack(alignment: .leading, spacing: 4) {
                         Text(headline).font(.title2.bold())
                         Text("Nothing has changed yet. Untick anything you want to keep as it is.")
@@ -319,6 +325,7 @@ struct CheckupView: View {
                 .appearIn(delay: 0)
                 LazyVGrid(columns: [GridItem(.adaptive(minimum: 230), spacing: 14)], spacing: 14) {
                     Tile(icon: "sparkles", title: "Junk", value: Fmt.bytes(model.junk),
+                         accent: model.junk > 0 ? Brand.coral : .primary,
                          caption: "Caches, logs and developer leftovers.",
                          selected: tick(.junk, enabled: model.junk > 0),
                          review: { nav.pane = .clean })
@@ -337,6 +344,7 @@ struct CheckupView: View {
                          review: { nav.pane = .speed })
                         .hoverLift().appearIn(delay: 0.15)
                     Tile(icon: "doc.on.doc", title: "Duplicates", value: Fmt.bytes(model.duplicatesSize),
+                         accent: model.duplicatesSize > 0 ? Brand.coral : .primary,
                          caption: model.duplicateGroups == 0 ? "No duplicates in Downloads." :
                             "\(plural(model.duplicateGroups, "file")) in Downloads with extra copies. One copy is always kept.",
                          selected: tick(.duplicates, enabled: model.duplicatesSize > 0),
@@ -360,7 +368,7 @@ struct CheckupView: View {
         if model.duplicatesSize > 0 { parts.append("\(Fmt.bytes(model.duplicatesSize)) of duplicates") }
         let risky = model.threats.filter { $0.trust == .danger }.count
         if risky > 0 { parts.append(plural(risky, "thing", "things") + " to look at") }
-        return parts.isEmpty ? "All tidy." : "Found " + parts.joined(separator: ", ") + "."
+        return parts.isEmpty ? "Spotless. Nothing to sweep." : "Found " + parts.joined(separator: ", ") + "."
     }
 
     private func tick(_ m: CheckupModel.Module, enabled: Bool) -> Binding<Bool>? {
@@ -375,7 +383,7 @@ struct CheckupView: View {
                 ScanRing(progress: 1, spinning: true, size: 200, lineWidth: 14)
                 Mascot(pose: .sweep, size: 120, motion: .sweep)
             }
-            Text("Tidying up…").font(.title2.bold())
+            Text("Sweeping it up…").font(.title2.bold())
         }
     }
 
@@ -384,9 +392,10 @@ struct CheckupView: View {
             ZStack {
                 ScanRing(progress: 1, size: 200, lineWidth: 14)
                 Mascot(pose: .happy, size: 112, motion: .bounce)
+                DustBunny(mood: .gone, size: 54).offset(x: 92, y: 58)
             }
             .overlay(Confetti().frame(width: 600, height: 500))
-            Text("Sparkling.").font(.largeTitle.bold())
+            Text("Spotless.").font(.largeTitle.bold())
             VStack(alignment: .leading, spacing: 6) {
                 ForEach(model.summary, id: \.self) { Label($0, systemImage: "checkmark.circle").foregroundStyle(.primary) }
                 ForEach(model.problems, id: \.self) { Label($0, systemImage: "exclamationmark.triangle").foregroundStyle(.orange) }

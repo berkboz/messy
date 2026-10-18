@@ -69,6 +69,8 @@ struct Tile: View {
     let icon: String
     let title: String
     let value: String
+    /// Coral when the tile counts mess, the default text colour otherwise.
+    var accent: Color = .primary
     let caption: String
     var selected: Binding<Bool>? = nil
     var busy = false
@@ -87,6 +89,7 @@ struct Tile: View {
             Text(title).font(.headline)
             Text(value)
                 .font(.system(size: 26, weight: .semibold, design: .rounded))
+                .foregroundStyle(accent)
                 .contentTransition(.numericText())
                 .lineLimit(1)
                 .minimumScaleFactor(0.6)

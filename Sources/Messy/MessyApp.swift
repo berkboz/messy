@@ -114,7 +114,7 @@ struct ContentView: View {
             VStack(alignment: .leading, spacing: 2) {
                 HStack(spacing: 9) {
                     Image(nsImage: NSApp.applicationIconImage).resizable().frame(width: 30, height: 30)
-                    Text("Messy").font(.system(size: 20, weight: .bold, design: .rounded))
+                    Wordmark(size: 21)
                 }
                 .padding(.horizontal, 8)
                 .padding(.top, 34)
