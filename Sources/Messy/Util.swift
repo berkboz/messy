@@ -231,11 +231,7 @@ struct PaneHeader<Actions: View>: View {
     var body: some View {
         HStack(alignment: .top) {
             VStack(alignment: .leading, spacing: 4) {
-                VStack(alignment: .leading, spacing: 1) {
-                    Text(title).font(.title2.bold())
-                    Squiggle(waves: 2).stroke(Brand.coral.opacity(0.85), style: StrokeStyle(lineWidth: 2.5, lineCap: .round))
-                        .frame(width: 46, height: 6)
-                }
+                Text(title).font(.title2.weight(.semibold)).tracking(-0.4)
                 Text(subtitle).font(.callout).foregroundStyle(.secondary)
                     .fixedSize(horizontal: false, vertical: true)
             }

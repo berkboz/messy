@@ -80,7 +80,7 @@ private struct DashboardContent: View {
             ZStack {
                 ScanRing(progress: Double(health.score) / 100, size: compact ? 58 : 96, lineWidth: compact ? 7 : 10)
                 Text("\(health.score)")
-                    .font(.system(size: compact ? 18 : 28, weight: .bold, design: .rounded))
+                    .font(.system(size: compact ? 18 : 28, weight: .semibold))
                     .contentTransition(.numericText())
             }
             VStack(alignment: .leading, spacing: 3) {
@@ -114,7 +114,7 @@ private struct DashboardContent: View {
                     Image(systemName: expanded == w.rawValue ? "chevron.up" : "chevron.down")
                         .font(.caption2).foregroundStyle(.tertiary)
                 }
-                Text(value).font(.system(.title3, design: .rounded).bold()).monospacedDigit()
+                Text(value).font(.title3.weight(.semibold)).monospacedDigit()
                     .contentTransition(.numericText()).lineLimit(1).minimumScaleFactor(0.7)
                 Text(caption).font(.caption2).foregroundStyle(.secondary).lineLimit(1)
             }
@@ -135,7 +135,7 @@ private struct DashboardContent: View {
                 Text(title).font(.headline)
                 Spacer()
                 VStack(alignment: .trailing, spacing: 0) {
-                    Text(value).font(.system(.title3, design: .rounded).bold()).monospacedDigit()
+                    Text(value).font(.title3.weight(.semibold)).monospacedDigit()
                         .contentTransition(.numericText())
                     Text(caption).font(.caption).foregroundStyle(.secondary)
                 }

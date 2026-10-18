@@ -88,7 +88,7 @@ struct Tile: View {
             }
             Text(title).font(.headline)
             Text(value)
-                .font(.system(size: 26, weight: .semibold, design: .rounded))
+                .font(.system(size: 26, weight: .semibold))
                 .foregroundStyle(accent)
                 .contentTransition(.numericText())
                 .lineLimit(1)

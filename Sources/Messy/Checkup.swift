@@ -307,12 +307,6 @@ struct CheckupView: View {
             ScrollView {
                 HStack(spacing: 16) {
                     Mascot(pose: model.threats.contains { $0.trust == .danger } ? .worried : .happy, size: 76, motion: .bob)
-                    if model.junk > 0 || model.duplicatesSize > 0 {
-                        HStack(spacing: -10) {
-                            DustBunny(mood: .scared, size: 38)
-                            DustBunny(mood: .idle, size: 30).offset(y: 8)
-                        }
-                    }
                     VStack(alignment: .leading, spacing: 4) {
                         Text(headline).font(.title2.bold())
                         Text("Nothing has changed yet. Untick anything you want to keep as it is.")
@@ -392,7 +386,6 @@ struct CheckupView: View {
             ZStack {
                 ScanRing(progress: 1, size: 200, lineWidth: 14)
                 Mascot(pose: .happy, size: 112, motion: .bounce)
-                DustBunny(mood: .gone, size: 54).offset(x: 92, y: 58)
             }
             .overlay(Confetti().frame(width: 600, height: 500))
             Text("Spotless.").font(.largeTitle.bold())
