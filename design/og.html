@@ -6,15 +6,15 @@
   html, body { margin: 0; width: 1200px; height: 630px; overflow: hidden; }
   body {
     background: #0b1517;
-    font-family: ui-rounded, "SF Pro Rounded", -apple-system, sans-serif;
+    font-family: -apple-system, "SF Pro Display", "Inter", sans-serif;
     color: #f2f2f2;
     display: flex;
     align-items: center;
   }
   .left { width: 520px; padding-left: 72px; box-sizing: border-box; }
   .icon { width: 96px; height: 96px; display: block; margin-bottom: 26px; }
-  h1 { font-size: 112px; font-weight: 900; letter-spacing: -3px; margin: 0; line-height: 1; }
-  svg.squiggle { display: block; margin: 6px 0 26px 4px; }
+  h1 { font-size: 112px; font-weight: 600; letter-spacing: -4.5px; margin: 0 0 26px; line-height: 1; }
+  h1 span { color: #54d6c2; }
   p { font-size: 34px; line-height: 1.3; color: #bdbdbd; margin: 0 0 26px; }
   .url { font-size: 26px; color: #8a8a8a; }
   .right { flex: 1; height: 100%; position: relative; }
@@ -23,11 +23,8 @@
 </head>
 <body>
   <div class="left">
-    <img class="icon" src="icon-clean.png" alt="">
-    <h1>messy</h1>
-    <svg class="squiggle" width="300" height="26" viewBox="0 0 300 26">
-      <path d="M4 13 C 30 0, 50 26, 76 13 S 122 0, 148 13 S 194 26, 220 13 S 266 0, 296 13" fill="none" stroke="#FF856B" stroke-width="7" stroke-linecap="round"/>
-    </svg>
+    <img class="icon" src="brand/icon-c-clean.png" alt="">
+    <h1>messy<span>.</span></h1>
     <p>A free, open-source cleaner for your Mac</p>
     <div class="url">brk.bz/messy</div>
   </div>
