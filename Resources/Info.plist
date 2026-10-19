@@ -15,9 +15,9 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>0.2.1</string>
+	<string>0.3.0</string>
 	<key>CFBundleVersion</key>
-	<string>3</string>
+	<string>4</string>
 	<key>LSApplicationCategoryType</key>
 	<string>public.app-category.utilities</string>
 	<key>LSMinimumSystemVersion</key>
@@ -32,6 +32,12 @@
 	<string>Messy needs access to show old installers in Downloads and their sizes.</string>
 	<key>NSHighResolutionCapable</key>
 	<true/>
+	<key>SUFeedURL</key>
+	<string>https://github.com/berkboz/messy/releases/latest/download/appcast.xml</string>
+	<key>SUPublicEDKey</key>
+	<string>INnZSVqMhR71S+7U07ykOqFDvps+sR/k1uBeM+8qvkU=</string>
+	<key>SUScheduledCheckInterval</key>
+	<integer>86400</integer>
 	<key>NSHumanReadableCopyright</key>
 	<string>© 2026 Berk Boz. MIT License.</string>
 </dict>

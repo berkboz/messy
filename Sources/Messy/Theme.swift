@@ -417,3 +417,39 @@ private struct AppearIn: ViewModifier {
 extension View {
     func appearIn(delay: Double) -> some View { modifier(AppearIn(delay: delay)) }
 }
+
+/// The icon's broom as a one-colour template, for the menu bar when no readings are shown.
+enum BroomGlyph {
+    static let menuBar: NSImage = {
+        let image = NSImage(size: NSSize(width: 18, height: 18), flipped: false) { rect in
+            guard let ctx = NSGraphicsContext.current?.cgContext else { return false }
+            // Drawn upright, then leaned like the broom in the icon.
+            ctx.translateBy(x: rect.midX, y: rect.midY)
+            ctx.rotate(by: -.pi / 6)
+            ctx.scaleBy(x: 0.92, y: 0.92)
+            ctx.translateBy(x: -9, y: -9)
+            NSColor.black.setFill()
+            NSBezierPath(roundedRect: NSRect(x: 8.1, y: 10.6, width: 1.8, height: 7.4), xRadius: 0.9, yRadius: 0.9).fill()
+            NSBezierPath(roundedRect: NSRect(x: 5.9, y: 8.4, width: 6.2, height: 1.7), xRadius: 0.5, yRadius: 0.5).fill()
+            let head = NSBezierPath()
+            head.move(to: NSPoint(x: 6.2, y: 7.9))
+            head.curve(to: NSPoint(x: 3.4, y: 0.8), controlPoint1: NSPoint(x: 4.6, y: 6.2), controlPoint2: NSPoint(x: 3.4, y: 3.2))
+            head.curve(to: NSPoint(x: 14.6, y: 0.8), controlPoint1: NSPoint(x: 7.0, y: 0.0), controlPoint2: NSPoint(x: 11.0, y: 0.0))
+            head.curve(to: NSPoint(x: 11.8, y: 7.9), controlPoint1: NSPoint(x: 14.6, y: 3.2), controlPoint2: NSPoint(x: 13.4, y: 6.2))
+            head.close()
+            head.fill()
+            // Two cuts between the bristles.
+            ctx.setBlendMode(.clear)
+            ctx.setLineWidth(0.9)
+            ctx.setLineCap(.round)
+            for (top, bottom) in [(NSPoint(x: 7.6, y: 5.6), NSPoint(x: 6.6, y: 1.4)), (NSPoint(x: 10.4, y: 5.6), NSPoint(x: 11.4, y: 1.4))] {
+                ctx.move(to: top)
+                ctx.addLine(to: bottom)
+            }
+            ctx.strokePath()
+            return true
+        }
+        image.isTemplate = true
+        return image
+    }()
+}

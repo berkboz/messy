@@ -66,6 +66,8 @@ private struct DashboardContent: View {
                 HStack {
                     Button("Open Messy", action: openMain)
                     Spacer()
+                    SettingsButton { Image(systemName: "gearshape") }
+                        .help("Settings")
                     Button("Quit") { NSApp.terminate(nil) }
                 }
             }
@@ -360,5 +362,41 @@ private struct DashboardContent: View {
         if b.charging { return b.minutesLeft.map { "Charging, full in \(SystemInfo.duration(Double($0 * 60)))" } ?? "Charging" }
         if b.onPower { return "On power" }
         return b.minutesLeft.map { "\(SystemInfo.duration(Double($0 * 60))) left" } ?? "On battery"
+    }
+}
+
+/// The menu bar item: the readings picked in Settings, or the broom when none are.
+struct MenuBarLabel: View {
+    @ObservedObject var stats: SystemStats
+    @AppStorage(MenuBarPrefs.cpu) private var cpu = true
+    @AppStorage(MenuBarPrefs.ram) private var ram = true
+    @AppStorage(MenuBarPrefs.network) private var network = false
+    @AppStorage(MenuBarPrefs.disk) private var disk = false
+
+    var body: some View {
+        // A menu bar label renders one Text or one Image, so the readings are joined into a single Text.
+        let parts = [
+            cpu ? Text("\(Image(systemName: "cpu")) \(stats.cpuPercent)%") : nil,
+            ram ? Text("\(Image(systemName: "memorychip")) \(stats.memPercent)%") : nil,
+            network ? Text("↓\(Self.rate(stats.netIn)) ↑\(Self.rate(stats.netOut))") : nil,
+            disk ? Text("\(Image(systemName: "internaldrive")) \(Self.gb(stats.diskFree))") : nil,
+        ].compactMap { $0 }
+        if parts.isEmpty {
+            Image(nsImage: BroomGlyph.menuBar)
+        } else {
+            parts.dropFirst().reduce(parts[0]) { $0 + Text("  ") + $1 }.monospacedDigit()
+        }
+    }
+
+    /// Short and steady width: "840K", "1.2M", "12M".
+    static func rate(_ bytesPerSecond: Double) -> String {
+        let kb = bytesPerSecond / 1000
+        if kb < 1000 { return "\(Int(kb.rounded()))K" }
+        let mb = kb / 1000
+        return mb < 10 ? String(format: "%.1fM", mb) : "\(Int(mb.rounded()))M"
+    }
+
+    static func gb(_ bytes: Int64) -> String {
+        "\(Int((Double(bytes) / 1_000_000_000).rounded())) GB"
     }
 }

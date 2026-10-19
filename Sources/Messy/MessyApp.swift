@@ -4,9 +4,24 @@ import SwiftUI
 struct MessyApp: App {
     @StateObject private var stats = SystemStats()
     @StateObject private var store = Store()
+    @NSApplicationDelegateAdaptor(AppDelegate.self) private var appDelegate
     @AppStorage(Prefs.showMenuBar) private var showMenuBar = true
+    @AppStorage(Prefs.showInDock) private var showInDock = true
 
-    init() { AlertPrefs.registerDefaults() }
+    init() {
+        AlertPrefs.registerDefaults()
+        _ = AppUpdater.shared
+    }
+
+    /// Removing the item by ⌘-dragging it off the menu bar is undone while the Dock icon is hidden.
+    private var menuBarInserted: Binding<Bool> {
+        Binding(get: { showMenuBar }, set: { on in
+            showMenuBar = on
+            if !on && !showInDock {
+                DispatchQueue.main.async { UserDefaults.standard.set(true, forKey: Prefs.showMenuBar) }
+            }
+        })
+    }
 
     var body: some Scene {
         WindowGroup("Messy", id: "main") {
@@ -16,12 +31,16 @@ struct MessyApp: App {
                 .frame(minWidth: 980, minHeight: 660)
         }
         .windowStyle(.hiddenTitleBar)
+        .commands {
+            CommandGroup(after: .appInfo) { CheckForUpdatesButton() }
+        }
 
         Settings {
             SettingsView()
+                .environmentObject(stats)
         }
 
-        MenuBarExtra(isInserted: $showMenuBar) {
+        MenuBarExtra(isInserted: menuBarInserted) {
             Dashboard(compact: true)
                 .environmentObject(stats)
                 .environmentObject(store)
@@ -29,7 +48,7 @@ struct MessyApp: App {
                 .background(BrandBackground())
                 .messyStyle()
         } label: {
-            Text("\(Image(systemName: "cpu")) \(stats.cpuPercent)%  \(Image(systemName: "memorychip")) \(stats.memPercent)%")
+            MenuBarLabel(stats: stats)
         }
         .menuBarExtraStyle(.window)
     }
@@ -131,6 +150,17 @@ struct ContentView: View {
                     if p == .checkup { Divider().padding(.vertical, 6).padding(.horizontal, 8) }
                 }
                 Spacer()
+                SettingsButton {
+                    HStack(spacing: 10) {
+                        Image(systemName: "gearshape").frame(width: 20)
+                        Text("Settings")
+                    }
+                    .foregroundStyle(.secondary)
+                    .padding(.horizontal, 10)
+                    .padding(.vertical, 7)
+                    .contentShape(Rectangle())
+                }
+                .buttonStyle(.plain)
             }
             .padding(10)
             .frame(width: 190)
