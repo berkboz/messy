@@ -39,16 +39,37 @@ Optional alerts: low disk, a full Trash, memory tight for five minutes, a weekly
 - **No network unless you click.** No account, telemetry or analytics. Checking for updates asks each app's own update server (it sees your IP address), and the speed test uses Apple's `networkQuality`; both only run when you ask. Signature checks may let macOS confirm notarization tickets with Apple.
 - **Honest about limits.** No signature-based antivirus (macOS XProtect does that), and no chip temperatures, fan speeds or hung-app detection, which need private macOS interfaces.
 
-## Build
+## Quickstart
 
-Needs only the Xcode Command Line Tools.
+Prereqs: macOS 14+, Xcode Command Line Tools (`xcode-select --install`). No other dependencies; Sparkle is fetched by SwiftPM on first build.
 
 ```bash
-./build.sh          # build/Messy.app, universal, signed with your Developer ID if you have one
+git clone https://github.com/berkboz/messy.git && cd messy
+./build.sh                      # build/Messy.app, universal, signed with your Developer ID if you have one
+SIGN_IDENTITY="" ./build.sh     # ad-hoc signed build (what you want without a Developer ID)
 open build/Messy.app
+./test.sh                       # compiles the logic files with Tests/main.swift and runs the checks; must pass before a PR
 ```
 
-`SIGN_IDENTITY="" ./build.sh` makes an ad-hoc signed build, `./test.sh` runs the checks in `Tests/`, and `./release.sh` builds a notarized DMG; it needs a notarytool keychain profile (see the comment at the top of the script).
+`./release.sh` builds a notarized DMG and the Sparkle appcast; it needs a notarytool keychain profile (see the comment at the top of the script) and is maintainer-only.
+
+## Where things live
+
+| Path | What |
+|---|---|
+| `Sources/Messy/` | The app (SwiftUI): one file per pane (`Checkup`, `Clean`, `Clutter`, `Security`/`Threats`, `Speed`, `Uninstall`/`Updates`, `SpaceMap`, `Monitor`), plus `Theme.swift` / `DesignSystem.swift` (brand and controls) |
+| `Resources/` | `Info.plist`, entitlements, app icon, mascot sprites, sounds |
+| `Tests/main.swift` | Assertion-style checks run by `test.sh` (no XCTest) |
+| `design/` | Icon, brand art, screenshots used in this README, sound-synthesis scripts |
+| `videos/messy-launch/` | The launch video, a HyperFrames project with its own `AGENTS.md` |
+
+## Access you need
+
+Nothing for building, testing or contributing. Releasing needs the maintainer's Developer ID, notarytool profile and Sparkle key.
+
+## Working with Claude Code / Codex
+
+Agent rules are in `AGENTS.md`; the design language is in `DESIGN.md`.
 
 ## License
 
