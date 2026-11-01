@@ -23,3 +23,8 @@ Messy is a free, open-source Mac maintenance app (SwiftUI, macOS 14+, Swift Pack
 - Both `arm64` and `x86_64` triples write to the same products folder; `build.sh` copies each binary out right away. Keep that order if you edit it.
 - Animating full-window blurs costs real CPU on an idle screen: backgrounds are static on purpose.
 - Releases: bump `CFBundleShortVersionString` and `CFBundleVersion` in `Resources/Info.plist`, then `PUBLISH=1 ./release.sh`. Maintainer-only (needs Developer ID, notarytool profile `messy-notary`, Sparkle EdDSA key in the keychain).
+
+## Facts, access, machine
+- Facts and numbers: publish only what the code, `README.md` or `DESIGN.md` already states or you verified by running the app. No performance, detection-rate or "threats found" claims without a measurement noted in the PR. The token values live in `DESIGN.md`, `Theme.swift` and `DesignSystem.swift`.
+- Access: the repo is public. Fork and open a PR, or ask the maintainer (`berkboz`) for collaborator access. Building, testing and contributing need no account or credentials; only releases need maintainer credentials, which are never shared.
+- Machine-specific dependencies: none required. `build.sh` optionally uses a Developer ID from your own keychain (set `SIGN_IDENTITY=""` for ad-hoc signing). `videos/messy-launch/` needs Node and FFmpeg only if you work on the launch video.
